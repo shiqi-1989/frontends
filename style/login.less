@@ -1,0 +1,137 @@
+#background {
+    background: #222222 no-repeat fixed center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    min-height: 100vh;
+}
+
+video {
+    min-height: 100%;
+    width: 100%;
+    position: absolute;
+    object-fit: cover;
+    object-position: center center;
+    right: 0;
+    bottom: 0;
+}
+
+.login-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border-radius: 16px;
+}
+
+.login-title {
+    font-family: 'YouYuan', serif;
+    font-weight: bold;
+    width: 100%;
+    left: 0;
+    top: -65px;
+    position: fixed;
+    text-align: center;
+    color: #ffffff;
+    font-size: 35px;
+}
+
+.login-user {
+    box-sizing: border-box;
+    width: 400px;
+    padding: 35px 32px 0;
+
+    h2 {
+        margin-bottom: 45px;
+        text-align: center;
+        color: #373636;
+        font-weight: 700;
+        font-size: 30px;
+    }
+
+    .el-form-item {
+        margin-bottom: 32px;
+    }
+
+    .el-form-item__error {
+        padding-top: 8px;
+        padding-left: 13px;
+    }
+
+    button {
+        color: #ffffff;
+        cursor: pointer;
+        border-radius: 24px;
+        border: 1px solid #14C4BC;
+        background-color: #14C4BC;
+    }
+
+    button:hover {
+        border: 1px solid #16DAD1;
+        background-color: #16DAD1;
+    }
+
+    button:active {
+        border: 1px solid #14C4BC;
+        background-color: #14C4BC;
+    }
+
+    .el-input {
+        --el-input-text-color: var(--el-text-color-regular);
+        --el-input-border: var(--el-border);
+        --el-input-hover-border: #16DaD1;
+        --el-input-hover-border-color: #16DaD1;
+        --el-input-focus-border: #16DaD1;
+        --el-input-focus-border-color: #16DaD1;
+        --el-input-transparent-border: 0 0 0 1px transparent inset;
+        --el-input-border-color: var(--el-border-color);
+        --el-input-border-radius: var(--el-border-radius-base);
+        --el-input-bg-color: var(--el-fill-color-blank);
+        --el-input-icon-color: var(--el-text-color-placeholder);
+        --el-input-placeholder-color: var(--el-text-color-placeholder);
+        --el-input-clear-hover-color: var(--el-text-color-secondary);
+    }
+
+    .el-input__wrapper {
+        border-radius: 24px;
+    }
+
+    .el-input__wrapper:hover {
+        border-color: #16DAD1FF;
+    }
+
+    .el-input__wrapper:focus-within {
+        border: 1px solid #16DAD1FF;
+        box-shadow: inset 0 0 3px 3px rgba(22, 218, 209, 20%);
+    }
+
+    .is-error .el-input__wrapper:hover {
+        border-color: #f56c6c;
+    }
+
+    .is-error .el-input__wrapper:focus-within {
+        border-color: #f56c6c;
+        box-shadow: inset 0 0 3px 3px rgba(245, 108, 108, 20%);
+    }
+
+}
+
+.login_miss {
+    cursor: pointer;
+    color: #999999;
+}
+
+.login_miss:hover {
+    color: #14C4BC;
+}
+
+.miss-l {
+    margin-right: auto;
+}
+
+.miss-r {
+    margin-left: auto;
+}
+
+
+

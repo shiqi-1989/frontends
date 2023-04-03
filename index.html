@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link href="/favicon.ico" rel="icon"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="no-referrer" name="referrer">
+    <title>接口管理平台</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="/src/main.js" type="module"></script>
+</body>
+<!--whois start-->
+<script type="text/javascript">
+    sessionStorage.setItem('host', window.location.hostname)
+
+    function getip(obj) {
+        const cityInfo = {
+            city: `${obj['pro']} ${obj['city']}`,
+            addr: obj['addr'],
+            network: obj['ip'],
+        }
+        sessionStorage.setItem('cityInfo', JSON.stringify(cityInfo));
+    }
+</script>
+<!--要放于最底部-->
+<script src="https://whois.pconline.com.cn/ipJson.jsp?callback=getip"></script>
+<!--whois end-->
+
+<!--tb start-->
+<!--<script type="text/javascript">-->
+<!--    function ipCallback(i) {-->
+<!--        console.log(i.ip);-->
+<!--    }-->
+<!--</script>-->
+<!--要放于最底部-->
+<!--<script src="https://www.taobao.com/help/getip.php"></script>-->
+<!--tb end-->
+</html>

@@ -1,0 +1,16 @@
+.el-loading-spinner {
+    background-image: url("../svg-loaders/tail-spin.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 50px;
+    background-position: center, center;
+    top: calc(50% - 10px);
+}
+
+.el-loading-spinner .circular {
+    display: none;
+}
+
+.el-loading-spinner .el-loading-text {
+    margin: 65px 0 0 0;
+}

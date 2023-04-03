@@ -1,0 +1,91 @@
+// .manage {
+//   height: 90%;
+//   padding-bottom: 20px;
+//   overflow: hidden;
+//
+//   &header {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: flex-start;
+//   }
+// }
+
+.el-select-dropdown__item.selected {
+  background-color: #82a2cc;
+  color: #ffffff;
+  border-radius: 5px;
+}
+
+.my-info-dialog {
+  --el-dialog-border-radius: 10px;
+
+  .el-dialog__title {
+    color: #4a4c59;
+    font-weight: 600;
+  }
+}
+
+.el-dialog__header {
+  margin-right: 0;
+  border-bottom: 1px solid var(--el-border-color);
+}
+
+.el-overlay {
+  z-index: 1000 !important;
+  background-color: rgba(0, 0, 0, 0.78);
+}
+
+.el-dialog__body {
+  padding: 10px 20px;
+
+  .el-row {
+    padding-top: 0 !important;
+  }
+}
+
+.up-expand {
+  position: absolute;
+  z-index: -1;
+  left: -10px;
+  top: calc(50% - 20px);
+  height: 40px;
+  width: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  background-color: #c1cdff;
+  cursor: pointer;
+}
+
+.el-popper.is-customized {
+  /* Set padding to ensure the height is 32px */
+  padding: 6px 12px;
+  background: linear-gradient(90deg, rgb(159, 229, 151), rgb(204, 229, 129));
+}
+
+.el-popper.is-customized .el-popper__arrow::before {
+  background: linear-gradient(45deg, #b2e68d, #bce689);
+  right: 0;
+}
+
+.el-popper.is-primary {
+  /* Set padding to ensure the height is 32px */
+  padding: 6px 12px;
+  background: linear-gradient(90deg, rgb(151, 182, 229), rgb(129, 226, 229));
+}
+
+.el-popper.is-primary .el-popper__arrow::before {
+  background: linear-gradient(45deg, #97c7e5, #81cae5);
+  right: 0;
+}
+
+.el-popper.is-error {
+  /* Set padding to ensure the height is 32px */
+  padding: 6px 12px;
+  background: linear-gradient(90deg, rgb(212, 151, 229), rgb(229, 129, 129));
+}
+
+.el-popper.is-error .el-popper__arrow::before {
+  background: linear-gradient(45deg, #dd97e5, #e5819c);
+  right: 0;
+}
