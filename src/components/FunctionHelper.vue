@@ -1,81 +1,76 @@
 <template>
-    <el-dialog
-            v-model="dialogFun"
-            title="函数助手"
-            width="50%"
-    >
-        <el-select v-model="value"
-                   clearable
-                   filterable
-                   placeholder="请选择函数"
-                   @change="changeFun"
-                   style="width: 100%;margin-bottom: 5px;">
-            <el-option
-                    v-for="item in funList"
-                    :key="item.index"
-                    :label="item"
-                    :value="item"
-            >
-            </el-option>
-        </el-select>
-        <el-table
-                :data="funTable"
-                border
-                height="calc(100%)"
-                style="margin-bottom: 5px;"
+    <el-select v-model="value"
+               clearable
+               filterable
+               placeholder="请选择函数"
+               @change="changeFun"
+               style="width: 100%;margin-bottom: 5px;">
+        <el-option
+            v-for="item in funList"
+            :key="item.index"
+            :label="`${item.value}（${item.label}）`"
+            :value="item.value"
+        >
+        </el-option>
+    </el-select>
+    <el-table
+        :data="funTable"
+        border
+        height="calc(100%)"
+        style="margin-bottom: 5px;"
 
-        >
-            <el-table-column label="参数名"
-                             min-width="30%">
-                <template #default="scope">
-                    <el-input v-model="scope.row.name" clearable spellcheck="false"/>
-                </template>
-            </el-table-column>
-            <el-table-column label="参数值"
-                             min-width="70%">
-                <template #default="scope">
-                    <el-date-picker v-if="scope.row.type==='Time'"
-                                    v-model="scope.row.value"
-                                    type="datetime"
-                                    format="YYYY/MM/DD hh:mm:ss"
-                                    value-format="YYYY-MM-DD hh:mm:ss"
-                                    style="width: 100%;"
-                                    placeholder="Select date and time"
+    >
+        <el-table-column label="参数名"
+                         min-width="30%">
+            <template #default="scope">
+                <el-input v-model="scope.row.name" clearable spellcheck="false"/>
+            </template>
+        </el-table-column>
+        <el-table-column label="参数值"
+                         min-width="70%">
+            <template #default="scope">
+                <el-date-picker v-if="scope.row.type==='Time'"
+                                v-model="scope.row.value"
+                                type="datetime"
+                                format="YYYY/MM/DD hh:mm:ss"
+                                value-format="YYYY-MM-DD hh:mm:ss"
+                                style="width: 100%;"
+                                placeholder="Select date and time"
+                />
+                <el-select v-else-if="scope.row.type==='Select'" v-model="scope.row.value" class="m-2"
+                           placeholder="Select">
+                    <el-option
+                        v-for="item in selectOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
                     />
-                    <el-select v-else-if="scope.row.type==='Select'" v-model="scope.row.value" class="m-2" placeholder="Select">
-                        <el-option
-                                v-for="item in selectOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
-                        />
-                    </el-select>
-                    <el-input v-else v-model="scope.row.value" clearable spellcheck="false"
-                              :placeholder="scope.row.type"/>
-                </template>
-            </el-table-column>
-        </el-table>
-        <el-input
-                v-model="funExpression"
-                placeholder="表达式"
-                style="margin-bottom: 5px;"
-        >
-            <template #prepend>
-                表达式
+                </el-select>
+                <el-input v-else v-model="scope.row.value" clearable spellcheck="false"
+                          :placeholder="scope.row.type"/>
             </template>
-            <template #append>
-                <el-button @click="generatedExp">生成</el-button>
-            </template>
-        </el-input>
-        <span>函数结果</span>
-        <el-input
-                class="textarea"
-                v-model="funResult"
-                show-word-limit
-                :rows="6"
-                type="textarea"
-        />
-    </el-dialog>
+        </el-table-column>
+    </el-table>
+    <el-input
+        v-model="funExpression"
+        placeholder="表达式"
+        style="margin-bottom: 5px;"
+    >
+        <template #prepend>
+            表达式
+        </template>
+        <template #append>
+            <el-button @click="generatedExp">生成</el-button>
+        </template>
+    </el-input>
+    <span>函数结果</span>
+    <el-input
+        class="textarea"
+        v-model="funResult"
+        show-word-limit
+        :rows="6"
+        type="textarea"
+    />
 </template>
 
 <script setup>
@@ -83,23 +78,16 @@
 import {ref} from "vue";
 import apis from "../../api/api.js";
 
-const props = defineProps({
-    dialogFun: {
-        type: Boolean,
-        required: true,
-        default: false
-    }
-})
 const value = ref("")
 const selectOptions = [
-        {
-            label: "s",
-            value: "s"
-        },
-        {
-            label: "ms",
-            value: "ms"
-        }
+    {
+        label: "s",
+        value: "s"
+    },
+    {
+        label: "ms",
+        value: "ms"
+    }
 ]
 apis.funcList().then(({data}) => {
     console.log(data.data)
@@ -217,9 +205,11 @@ const generatedExp = () => {
         }
     }
 }
-.textarea{
-    margin-bottom: 10px;
-    :deep(.el-textarea__inner){
+
+.textarea {
+    margin-bottom: 15px;
+
+    :deep(.el-textarea__inner) {
         overflow-x: hidden;
     }
 }
