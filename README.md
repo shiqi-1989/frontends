@@ -27,7 +27,9 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 ### 项目管理
   - 项目列表
-  ![image](https://user-images.githubusercontent.com/48465237/229175117-3e313b87-b425-42d3-833d-6c4b57b4aada.png)
+  - 新增
+  [screenity (5).webm](https://user-images.githubusercontent.com/48465237/230832415-f6bcda4c-504d-43e6-8b4e-5d05cb6f8f34.webm)
+
   - 项目下 api列表 case列表
   ![image](https://user-images.githubusercontent.com/48465237/229175355-37579841-0c68-4997-9205-35af239eeb09.png)
   - 新增api 编辑api 支持“快捷接口”和“cURLi解析” 两种创建方式
