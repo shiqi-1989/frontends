@@ -61,16 +61,22 @@
         <el-table-column label="操作" width="100">
             <template #default="scope">
                 <div class="button-box">
-                    <el-button circle icon="EditPen" size="small" type="primary" @click="editEvent(scope.row)">
-                    </el-button>
-                    <el-popconfirm
-                            title="您确定要删除该数据?"
-                            @confirm.prevent="removeEvent(scope.$index, scope.row)">
-                        <template #reference>
-                            <el-button circle icon="Delete" size="small" type="danger">
-                            </el-button>
-                        </template>
-                    </el-popconfirm>
+                    <el-tooltip content="编辑接口" placement="top" effect="primary">
+                        <el-button circle icon="EditPen" size="small" type="primary" @click="editEvent(scope.row)">
+                        </el-button>
+                    </el-tooltip>
+                    <el-tooltip content="删除接口" placement="top" effect="error">
+                        <el-button circle size="small">
+                            <el-popconfirm
+                                    title="您确定要删除该数据?"
+                                    @confirm.prevent="removeEvent(scope.$index, scope.row)">
+                                <template #reference>
+                                    <el-button circle icon="Delete" size="small" type="danger">
+                                    </el-button>
+                                </template>
+                            </el-popconfirm>
+                        </el-button>
+                    </el-tooltip>
                 </div>
             </template>
         </el-table-column>

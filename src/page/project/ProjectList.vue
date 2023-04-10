@@ -45,19 +45,27 @@
         <el-table-column label="操作" width="125">
             <template #default="scope">
                 <div class="button-box">
-                    <el-button circle icon="Expand" size="small" type="success"
-                               @click="intoEvent(scope.row.id, scope.row.title)">
-                    </el-button>
-                    <el-button circle icon="EditPen" size="small" type="primary" @click="editEvent(scope.row)">
-                    </el-button>
-                    <el-popconfirm
-                            title="您确定要删除该数据?"
-                            @confirm.prevent="removeEvent(scope.$index, scope.row)">
-                        <template #reference>
-                            <el-button circle icon="Delete" size="small" type="danger">
-                            </el-button>
-                        </template>
-                    </el-popconfirm>
+                    <el-tooltip content="进入项目" placement="top" effect="customized">
+                        <el-button circle icon="Expand" size="small" type="success"
+                                   @click="intoEvent(scope.row.id, scope.row.title)">
+                        </el-button>
+                    </el-tooltip>
+                    <el-tooltip content="编辑项目" placement="top" effect="primary">
+                        <el-button circle icon="EditPen" size="small" type="primary" @click="editEvent(scope.row)">
+                        </el-button>
+                    </el-tooltip>
+                    <el-tooltip content="删除项目" placement="top" effect="error">
+                        <el-button circle size="small">
+                            <el-popconfirm
+                                    title="您确定要删除该数据?"
+                                    @confirm.prevent="removeEvent(scope.$index, scope.row)">
+                                <template #reference>
+                                    <el-button circle icon="Delete" size="small" type="danger">
+                                    </el-button>
+                                </template>
+                            </el-popconfirm>
+                        </el-button>
+                    </el-tooltip>
                 </div>
             </template>
         </el-table-column>
@@ -476,6 +484,7 @@ const submitForm = (formEl) => {
 
     .button-box {
         display: flex;
+        align-items: center;
         justify-content: flex-start;
     }
 }

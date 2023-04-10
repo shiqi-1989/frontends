@@ -2,22 +2,23 @@
     <el-select v-model="value"
                clearable
                filterable
+               autocomplete=“new-password”
                placeholder="请选择函数"
                @change="changeFun"
                style="width: 100%;margin-bottom: 5px;">
         <el-option
-            v-for="item in funList"
-            :key="item.index"
-            :label="`${item.value}（${item.label}）`"
-            :value="item.value"
+                v-for="item in funList"
+                :key="item.index"
+                :label="`${item.value}（${item.label}）`"
+                :value="item.value"
         >
         </el-option>
     </el-select>
     <el-table
-        :data="funTable"
-        border
-        height="calc(100%)"
-        style="margin-bottom: 5px;"
+            :data="funTable"
+            border
+            height="calc(100%)"
+            style="margin-bottom: 5px;"
 
     >
         <el-table-column label="参数名"
@@ -40,10 +41,10 @@
                 <el-select v-else-if="scope.row.type==='Select'" v-model="scope.row.value" class="m-2"
                            placeholder="Select">
                     <el-option
-                        v-for="item in selectOptions"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
+                            v-for="item in selectOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
                     />
                 </el-select>
                 <el-input v-else v-model="scope.row.value" clearable spellcheck="false"
@@ -52,9 +53,9 @@
         </el-table-column>
     </el-table>
     <el-input
-        v-model="funExpression"
-        placeholder="表达式"
-        style="margin-bottom: 5px;"
+            v-model="funExpression"
+            placeholder="表达式"
+            style="margin-bottom: 5px;"
     >
         <template #prepend>
             表达式
@@ -65,11 +66,11 @@
     </el-input>
     <span>函数结果</span>
     <el-input
-        class="textarea"
-        v-model="funResult"
-        show-word-limit
-        :rows="6"
-        type="textarea"
+            class="textarea"
+            v-model="funResult"
+            show-word-limit
+            :rows="6"
+            type="textarea"
     />
 </template>
 
@@ -99,15 +100,17 @@ const funList = ref([])
 const funTable = ref([])
 const funResult = ref("")
 const changeFun = (val) => {
-    console.log(val)
-    funExpression.value = ""
-    funResult.value = ""
-    funTable.value = []
-    apis.funcInfo({
-        func: val
-    }).then(({data}) => {
-        funTable.value = data.data;
-    })
+    if (val) {
+        console.log(val)
+        funExpression.value = ""
+        funResult.value = ""
+        funTable.value = []
+        apis.funcInfo({
+            func: val
+        }).then(({data}) => {
+            funTable.value = data.data;
+        })
+    }
 }
 //  生成表达式和结果
 const generatedExp = () => {
@@ -124,24 +127,28 @@ const generatedExp = () => {
     //     }
     // })
     funTable.value.forEach(item => {
-        if (item?.type === 'String' || item.type === 'Time' || item?.type === 'Select') {
-            params.push(`"${item?.value}"`)
-            // params ? (params += item.value ? `, "${item.value}"` : "") : (params += item.value ? `"${item.value}"` : "");
-
-        } else {
-            params.push(`${item?.value}`)
-            // params ? params += `, ${item.value}` : params += `${item.value}`
-        }
+        // if (item?.type === 'String' || item.type === 'Time' || item?.type === 'Select') {
+        //     params.push(`"${item?.value}"`)
+        //     // params ? (params += item.value ? `, "${item.value}"` : "") : (params += item.value ? `"${item.value}"` : "");
+        //
+        // } else {
+        //     params.push(`${item?.value}`)
+        //     // params ? params += `, ${item.value}` : params += `${item.value}`
+        // }
+        params.push(`${item?.value}`)
     })
     console.log(params)
     console.log(params.join(", "))
     if (value.value) {
-        funExpression.value = `\$\{${value.value}(${params})\}`
+        // funExpression.value = `\$\{${value.value}(${params})\}`
         apis.funcResult({
-            func: `${value.value}(${params})`,
+            // func: `${value.value}(${params})`,
+            option: value.value,
+            params: params
         }).then(({data}) => {
             console.log(data)
-            funResult.value = data.data.toString()
+            funResult.value = data.data.result;
+            funExpression.value = data.data.exp;
         })
     } else {
         funExpression.value = "请选择函数！"

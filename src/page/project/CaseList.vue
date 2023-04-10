@@ -74,7 +74,7 @@
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除用例" placement="top" effect="error">
-                        <div style="display:flex;align-self: center;">
+                        <el-button circle size="small">
                             <el-popconfirm
                                     title="您确定要删除该数据?"
                                     @confirm.prevent="removeEvent(scope.$index, scope.row.id)">
@@ -82,7 +82,7 @@
                                     <el-button circle icon="Delete" size="small" type="danger"></el-button>
                                 </template>
                             </el-popconfirm>
-                        </div>
+                        </el-button>
                     </el-tooltip>
                 </div>
             </template>
@@ -641,7 +641,7 @@ const runCase = (caseId = null, option) => {
 
     .button-box {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 }
 

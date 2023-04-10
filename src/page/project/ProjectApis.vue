@@ -79,16 +79,16 @@
         <el-table-column label="操作" width="125">
             <template #default="scope">
                 <div class="button-box">
-                    <el-tooltip content="执行api" placement="top">
+                    <el-tooltip content="执行api" placement="top" effect="customized">
                         <el-button circle icon="VideoPlay" size="small" type="success"
                                    @click="playApis(scope.row.id, scope.row.title)"></el-button>
                     </el-tooltip>
-                    <el-tooltip content="调试api" placement="top">
+                    <el-tooltip content="调试api" placement="top" effect="primary">
                         <el-button circle icon="Operation" size="small" type="primary"
                                    @click="editEvent(scope.row.id)">
                         </el-button>
                     </el-tooltip>
-                    <el-tooltip content="删除api" placement="top">
+                    <el-tooltip content="删除api" placement="top" effect="error">
                         <el-button circle size="small">
                             <el-popconfirm
                                     title="您确定要删除该数据?"

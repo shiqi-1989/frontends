@@ -57,16 +57,16 @@
         <el-table-column label="操作" width="125">
             <template #default="scope">
                 <div class="button-box">
-                    <el-tooltip content="执行用例" placement="top">
+                    <el-tooltip content="执行用例" placement="top" effect="customized">
                         <el-button circle icon="VideoPlay" size="small" type="success"
                                    @click="runCase(scope.row.id, 0)"></el-button>
                     </el-tooltip>
-                    <el-tooltip content="用例详情" placement="top">
+                    <el-tooltip content="用例详情" placement="top" effect="primary">
                         <el-button circle icon="Operation" size="small" type="primary"
                                    @click="editEvent(scope.row.id, scope.row.title, scope.row.case_env)">
                         </el-button>
                     </el-tooltip>
-                    <el-tooltip content="删除用例" placement="top">
+                    <el-tooltip content="删除用例" placement="top" effect="error">
                         <el-button circle size="small">
                             <el-popconfirm
                                     title="您确定要删除该数据?"
