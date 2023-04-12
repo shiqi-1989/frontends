@@ -73,6 +73,16 @@ const routes = [
                         name: 'Xmind2case',
                         component: () => import(/*webpackChunkName:'project'*/ '../page/tools/Xmind2case.vue'),
                         meta: {requireAuth: true, title: 'xmind2case'}
+                    },{   //项目下cases
+                        path: '/ChatGPT',
+                        name: 'ChatGPT',
+                        component: () => import(/*webpackChunkName:'project'*/ '../page/tools/ChatGPT.vue'),
+                        meta: {requireAuth: true, title: 'ChatGPT'}
+                    },{   //项目下cases
+                        path: '/Message',
+                        name: 'Message',
+                        component: () => import(/*webpackChunkName:'project'*/ '../page/tools/Message.vue'),
+                        meta: {requireAuth: true, title: 'Message'}
                     },
                 ]
             },

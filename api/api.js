@@ -242,6 +242,16 @@ const apis = {
     funcResult(params) {
         return instance.post(`/functionAssistant/fun_result`, params)
     },
+    // 验证码工具列表
+    messageToolsList(params) {
+        return instance.get(`/toolsMessage`, {
+            params: params
+        })
+    },
+    // 验证码工具获取验证码
+    messageSend(params) {
+        return instance.post(`/toolsMessage/get_msg`, params)
+    }
 }
 
 export default apis

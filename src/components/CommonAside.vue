@@ -110,6 +110,13 @@ const menuData = [
             {
                 index: "Xmind2case",
                 title: 'Xmind2case',
+            },{
+                index: "ChatGPT",
+                title: 'Chat GPT',
+            },
+            {
+                index: "Message",
+                title: 'Message',
             }
         ]
     },
