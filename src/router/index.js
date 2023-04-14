@@ -56,18 +56,6 @@ const routes = [
                 },
                 redirect: '/Xmind2case',
                 children: [
-                    {   //项目下apis
-                        path: '/AndroidTools',
-                        name: 'AndroidTools',
-                        component: () => import(/*webpackChunkName:'project'*/ '../page/tools/AndroidTools.vue'),
-                        meta: {requireAuth: true, title: '安卓工具'}
-                    },
-                    {   //项目下cases
-                        path: '/JsonTools',
-                        name: 'JsonTools',
-                        component: () => import(/*webpackChunkName:'project'*/ '../page/tools/JsonTools.vue'),
-                        meta: {requireAuth: true, title: 'Json工具'}
-                    },
                     {   //项目下cases
                         path: '/Xmind2case',
                         name: 'Xmind2case',

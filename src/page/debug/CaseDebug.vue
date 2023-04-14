@@ -1173,7 +1173,7 @@
     <el-dialog
         v-model="dialogFun"
         title="函数助手"
-        width="50%"
+        width="38%"
     >
         <FunctionHelper/>
     </el-dialog>

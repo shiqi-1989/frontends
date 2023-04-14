@@ -251,6 +251,18 @@ const apis = {
     // 验证码工具获取验证码
     messageSend(params) {
         return instance.post(`/toolsMessage/get_msg`, params)
+    },
+    // 验证码工具更新配置
+    messageEdit(id,params) {
+        return instance.patch(`/toolsMessage/${id}`, params)
+    },
+    // 验证码工具新增
+    messageAdd(params) {
+        return instance.post(`/toolsMessage`, params)
+    },
+    // 验证码工具删除
+    messageDel(id) {
+        return instance.delete(`/toolsMessage/${id}`)
     }
 }
 

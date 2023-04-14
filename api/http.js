@@ -3,6 +3,7 @@ import {Base64} from "js-base64";
 import {ElLoading, ElMessage} from "element-plus";
 import router from "../src/router";
 import pageLoading from '../src/assets/css/pageLoading.css'
+import {myLoading} from "../src/util/loadding.js"
 
 let loading
 
@@ -81,7 +82,7 @@ let instance = axios.create({
 
 
 // token加密
-function baseFun() {
+function baseFun()  {
     const token = localStorage.getItem('token')
     const base64 = Base64.encode(token + ':')
     return "Basic " + base64
@@ -89,7 +90,8 @@ function baseFun() {
 
 //http 请求拦截器 ： 在axios 请求发出之前给每一个接口携带token 去后端校验身份
 instance.interceptors.request.use(function (config) {
-    showLoading();
+    // showLoading();
+    myLoading.show("客官: 静心、静心 ...");
     config.headers = {
         'Content-Type': 'application/json', // 配置请求头
     }
@@ -106,10 +108,14 @@ instance.interceptors.request.use(function (config) {
 
 //http 响应拦截器
 instance.interceptors.response.use(function (res) {
-    hideLoading();
+    // hideLoading();
+    myLoading.hide();
+
     return Promise.resolve(res)
 }, error => {
-    hideLoading();
+    // hideLoading();
+    myLoading.hide();
+
     const {response} = error
     errorHandle(response)
     return Promise.reject(error)// 返回接口错误信息

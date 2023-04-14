@@ -25,6 +25,7 @@ import CommonHeader from '../../components/CommonHeader.vue'</script>
 }
 
 .el-main {
+    position: relative;
     // padding: 0 20px;
     padding-top: 0;
 }

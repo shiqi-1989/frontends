@@ -707,11 +707,7 @@ const runCase = (caseId = null, option) => {
 .button-box {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-
-    .el-button {
-        margin-left: 0px;
-    }
+    justify-content: space-around;
 }
 
 .button-box2 {
