@@ -1,7 +1,7 @@
 <template>
     <div class="add-api" @click="func1">
         <div class="add-api-icon">
-            <el-icon :size="25" color="#409EFC">
+            <el-icon :size="28" color="#409EFC">
                 <DocumentAdd/>
             </el-icon>
         </div>
@@ -10,8 +10,8 @@
     </div>
     <div class="add-api" @click="func2">
         <div class="add-api-icon">
-            <el-icon :size="25" color="#409EFC">
-                <Document/>
+            <el-icon :size="28" color="#409EFC">
+                <Link/>
             </el-icon>
         </div>
         <h4 class="add-api-text">

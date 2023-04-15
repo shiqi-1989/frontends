@@ -62,8 +62,8 @@
                     <el-card
                         :body-style="{ padding: '10px',height:'100%', boxSizing:'border-box',position:'relative'}">
                         <div id="configuration">
-                            <el-tooltip content="cURL导入" placement="top" effect="customized">
-                                <el-button circle icon="Document" color="#1bc014b0"
+                            <el-tooltip content="cURL解析" placement="top" effect="customized">
+                                <el-button circle icon="Link" color="#1bc014b0"
                                            @click="importApi"></el-button>
                             </el-tooltip>
                             <el-tooltip content="函数助手" placement="top" effect="customized">

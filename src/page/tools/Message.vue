@@ -1,4 +1,17 @@
 <template>
+    <div class="header">
+        <div class="tools">
+            <el-tooltip content="函数助手" placement="top" effect="customized">
+                <el-button type="primary" link
+                           @click="dialogFun=true">
+                    <el-icon :size="20">
+                        <Notebook/>
+                    </el-icon>
+                </el-button>
+            </el-tooltip>
+        </div>
+        <el-button type="success" icon="Plus" @click="insertEvent"/>
+    </div>
     <el-row :gutter="20">
         <el-col v-for="(item,index) in messageData" :span="6">
             <el-card class="box-card">
@@ -60,12 +73,6 @@
             </el-card>
         </el-col>
     </el-row>
-
-    <el-row>
-        <el-col :span="24">
-            <el-button type="success" style="width: 100%;" icon="Plus" @click="insertEvent"/>
-        </el-col>
-    </el-row>
     <!--    编辑/新增弹窗-->
     <el-dialog
             v-model="table.showEdit"
@@ -107,19 +114,28 @@
       </span>
         </template>
     </el-dialog>
+    <!--函数助手弹窗-->
+    <el-dialog
+            v-model="dialogFun"
+            title="函数助手"
+            width="38%"
+    >
+        <FunctionHelper/>
+    </el-dialog>
+
 </template>
 
 <script setup>
 import {onMounted, ref, nextTick, reactive} from 'vue'
-import apis from '../../../api/api'
+import apis from '../../../api/api';
+import FunctionHelper from '../../components/FunctionHelper.vue';
 import {VAceEditor} from 'vue3-ace-editor';
-import 'ace-builds/src-noconflict/ext-language_tools.js'
-import "ace-builds/src-noconflict/theme-sqlserver.js"
-import "ace-builds/src-noconflict/mode-json5.js"
+import 'ace-builds/src-noconflict/ext-language_tools.js';
+import "ace-builds/src-noconflict/theme-sqlserver.js";
+import "ace-builds/src-noconflict/mode-json5.js";
 import {ElMessage} from "element-plus";
 
-
-
+const dialogFun = ref(false)
 const aceConfig = reactive({
     lang: 'json5', //解析json
     theme: 'sqlserver', //主题
@@ -140,7 +156,6 @@ const aceConfig = reactive({
     }
 });
 const ruleFormRef = ref()
-const configStr = ref("")
 const params = (val) => {
     let config = {}
     try {
@@ -191,8 +206,8 @@ const messageTools = () => {
                 messageData.value = data.data;
             })
 }
+messageTools()
 onMounted(() => {
-    messageTools()
 })
 const messageSend = (env, item, index) => {
     apis.messageSend({
@@ -251,9 +266,9 @@ const addMessage = (params) => {
                 ElMessage.success("新增成功！");
             })
 }
-const delConfig = (index, id)=>{
+const delConfig = (index, id) => {
     apis.messageDel(id)
-            .then(()=>{
+            .then(() => {
                 messageData.value.splice(index, 1)
                 ElMessage.success("删除成功！")
             })
@@ -280,6 +295,17 @@ const submitForm = (formEl) => {
 </script>
 
 <style lang="less" scoped>
+.header {
+    justify-content: space-between;
+    display: flex;
+    margin-top: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #d7d7d7;
+
+    .tools {
+
+    }
+}
 
 .el-col {
     margin-top: 20px;
