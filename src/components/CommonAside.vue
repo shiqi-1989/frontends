@@ -110,7 +110,7 @@ const menuData = [
             {
                 index: "Xmind2case",
                 title: 'Xmind2case',
-            },{
+            }, {
                 index: "ChatGPT",
                 title: 'Chat GPT',
             },
@@ -130,6 +130,12 @@ const menuData = [
         index: "7",
         icon: 'QuestionFilled',
         title: '帮助中心',
+        subClass: []
+    },
+    {
+        index: "testInfo",
+        icon: 'Promotion',
+        title: '测试模块',
         subClass: []
     },
 ]

@@ -8,8 +8,11 @@
     <div class="login-content">
         <div class="login-title">接口管理平台</div>
         <div class="login-user">
-            <h2 v-if="reg==='注册'">Login</h2>
-            <h2 v-else>Register</h2>
+            <div class="text-background">
+                <h2 class="text" v-if="reg==='注册'">Login</h2>
+                <h2 class="text" v-else>Register</h2>
+            </div>
+
             <el-form
                     ref="ruleFormRef"
                     :model="user"
@@ -18,7 +21,7 @@
             >
                 <el-form-item label="" prop="mobile">
                     <el-input v-model="user.mobile" clearable maxlength="11"
-                              oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入账号" spellcheck="false"
+                              oninput="value=value.replace(/\D/g,'')" placeholder="请输入账号" spellcheck="false"
                               type="tel">
                         <template #prefix>
                             <el-icon :size="size" class="el-input__icon">
@@ -37,7 +40,7 @@
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-form-item v-if="reg==='登录'">
+                <el-form-item v-if="reg==='登录'" prop="username">
                     <el-input v-model="user.username" clearable placeholder="请输入用户名" spellcheck="false">
                         <template #prefix>
                             <el-icon :size="size" class="el-input__icon">
@@ -104,6 +107,7 @@ const rules = reactive({
         {required: true, message: "账号不能为空", trigger: 'blur'},
         {pattern: /^1[3456789]\d{9}$/, message: "账号必须11有效手机号", trigger: "blur"}
     ],
+    username: [{required: true, message: "用户名不能为空", trigger: 'blur'},],
     password: [{required: true, message: "密码不能为空", trigger: 'blur'},],
 })
 const size = ref(18)
@@ -132,7 +136,7 @@ const login = () => {
                     localStorage.setItem("userInfo", JSON.stringify(data.data))
                     router.push(`${redirect()}`)
                 } else {
-                    ElMessage.error(data.msg)
+                    ElMessage.error(data.detail)
                 }
             })
 }
@@ -146,7 +150,7 @@ const register = async () => {
                         path: redirect()
                     })
                 } else {
-                    ElMessage.error(data.msg)
+                    ElMessage.error(data.detail)
                 }
             })
 }
