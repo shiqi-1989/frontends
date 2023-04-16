@@ -2228,7 +2228,7 @@ const saveRequest = (obj) => {
         console.log("更新")
         apis.editApi(apiId, newObj)
                 .then(({data}) => {
-                    ElMessage.success(data.msg)
+                    ElMessage.success(data.detail)
                     // apiPage.value = 2
                     // apiList();
                     for (const index in historyData.value) {
@@ -2246,7 +2246,7 @@ const saveRequest = (obj) => {
         apis.addApi(newObj)
                 .then(({data}) => {
                     obj.id = data.data.id
-                    ElMessage.success(data.msg)
+                    ElMessage.success(data.detail)
                     console.log(data)
                     historyData.value.unshift(data.data)
                     loading2.value = false

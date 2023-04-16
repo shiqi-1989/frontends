@@ -104,23 +104,21 @@
             <el-form-item label="任务描述" prop="desc">
                 <el-input v-model="table.formData.desc" type="textarea"/>
             </el-form-item>
-            <el-form-item label="任务作业" prop="func_type">
-                <div style="display: flex;">
-                    <el-select v-model="table.formData.func" class="func_type"
-                               placeholder="请选择">
-                        <el-option v-for="item in funcTypeOptions" :label="item.label" :value="item.value"/>
-                    </el-select>
-                    <el-input v-model="table.formData.args" placeholder="作业ID"/>
-                    <!--<el-input v-model="table.formData.args" placeholder="作业参数(多个以','分割)"/>-->
-                </div>
-
+            <el-form-item label="作业类型" prop="func">
+                <el-select v-model="table.formData.func" class="func_type"
+                           placeholder="请选择">
+                    <el-option v-for="item in funcTypeOptions" :label="item.label" :value="item.value"/>
+                </el-select>
             </el-form-item>
-            <el-form-item label="触发器" prop="func">
+            <el-form-item label="作业ID" prop="args">
+                <el-input v-model="table.formData.args" placeholder="作业ID"/>
+            </el-form-item>
+            <el-form-item label="触发器" prop="trigger">
                 <el-select v-model="table.formData.trigger" placeholder="请选择">
                     <el-option v-for="item in triggerOptions" :label="item.label" :value="item.value"/>
                 </el-select>
             </el-form-item>
-            <el-form-item label="触发器参数" prop="func">
+            <el-form-item label="触发器参数" prop="trigger_condition">
                 <el-input v-model="table.formData.trigger_condition"
                           :placeholder="triggerCondition(table.formData.trigger)"
                           type="textarea"/>
@@ -182,6 +180,18 @@ const table = reactive({
         desc: [
             {required: false},
         ],
+        func: [
+            {required: true, message: '请选择作业类型', trigger: 'blur'},
+        ],
+        args: [
+            {required: true, message: '请输入作业ID', trigger: 'blur'}
+        ],
+        trigger: [
+            {required: true, message: '请选择任务触发器', trigger: 'blur'},
+        ],
+        trigger_condition: [
+            {required: true, message: '请输入触发器参数', trigger: 'blur'},
+        ],
     }
 })
 const tableHeight = ref()
@@ -233,6 +243,7 @@ const switchCrontab = (val, row) => {
     apis.switchCrontab({id: row.id, job_state: row.job_state})
             .then(({data}) => {
                 console.log(data)
+                ElMessage.success(data.detail)
             })
 }
 const c_width = index => {

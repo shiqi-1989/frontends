@@ -259,12 +259,12 @@ const saveVariable = () => {
         apis.editConfig(obj.id, obj)
                 .then(({data}) => {
                     console.log(data)
-                    ElMessage.success(data.msg)
+                    ElMessage.success(data.detail)
                 })
     } else {
         apis.addConfig(obj)
                 .then(({data}) => {
-                    ElMessage.success(data.msg)
+                    ElMessage.success(data.detail)
                     // envOptions.value.unshift({
                     //     id: data.data.id,
                     //     type: data.data.type,

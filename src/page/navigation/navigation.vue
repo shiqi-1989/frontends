@@ -204,11 +204,12 @@ const editTag = (row) => {
 const addTag = () => {
     apis.addTag(table.formData)
             .then(({data}) => {
+                ElMessage.success(data.detail)
                 table.linkData.unshift(data.data)
                 handleClose()
             })
             .catch((err) => {
-                ElMessage.success(err)
+                ElMessage.error(err)
             })
 
 }

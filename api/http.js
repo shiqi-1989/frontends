@@ -46,16 +46,16 @@ const errorHandle = (response) => {
             ElMessage.error("Network Error");
             break;
         case 400:
-            ElMessage.error(response.data?.msg);
+            ElMessage.error(response.data?.detail);
             break;
         case 401:
             // 401: 未登录状态，token过期，token异常 跳转登陆页
-            ElMessage.error(response.data?.msg);
+            ElMessage.error(response.data?.detail);
             toLogin();
             break;
         case 403:
             // 403 服务器认可token 但是token没有足够权限执行该操作
-            ElMessage.error(response.data?.msg);
+            ElMessage.error(response.data?.detail);
             break;
         case 404:
             // 404请求不存在
@@ -63,7 +63,7 @@ const errorHandle = (response) => {
             break;
         default:
             // if (response.data !== "") {
-            //     ElMessage.error(response.data.msg)
+            //     ElMessage.error(response.data.detail)
             //     break
             // }
             ElMessage.error(`${response.statusText} with status code ${response.status}`);

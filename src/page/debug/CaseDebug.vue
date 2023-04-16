@@ -4,7 +4,7 @@
             <el-row :gutter="20" style="height: 100%;">
                 <el-col :span="6">
                     <el-card
-                        :body-style="{ padding: '5px 10px 10px',height:'calc(100% - 50px)', boxSizing:'border-box', display:'flex',flexDirection:'column'}">
+                            :body-style="{ padding: '5px 10px 10px',height:'calc(100% - 50px)', boxSizing:'border-box', display:'flex',flexDirection:'column'}">
                         <template #header>
                             <div class="card-header">
                                 <h3 style="color: #7f7f7f;">用例步骤</h3>
@@ -38,11 +38,11 @@
                                                 <template #dropdown>
                                                     <el-dropdown-menu>
                                                         <el-dropdown-item
-                                                            :command="{command:1, id:element.id, index:index}">
+                                                                :command="{command:1, id:element.id, index:index}">
                                                             <Plus class="item-more"/>
                                                         </el-dropdown-item>
                                                         <el-dropdown-item
-                                                            :command="{command:2, id:element.id, index:index}">
+                                                                :command="{command:2, id:element.id, index:index}">
                                                             <Delete class="item-more"/>
                                                         </el-dropdown-item>
                                                     </el-dropdown-menu>
@@ -60,7 +60,7 @@
                 </el-col>
                 <el-col :span="18">
                     <el-card
-                        :body-style="{ padding: '10px',height:'100%', boxSizing:'border-box',position:'relative'}">
+                            :body-style="{ padding: '10px',height:'100%', boxSizing:'border-box',position:'relative'}">
                         <div id="configuration">
                             <el-tooltip content="cURL解析" placement="top" effect="customized">
                                 <el-button circle icon="Link" color="#1bc014b0"
@@ -74,33 +74,33 @@
                                        @click="configList"></el-button>
                             <el-select v-model="apiEnv" clearable placeholder="请选择环境" @change="selectConfig">
                                 <el-option
-                                    v-for="item in configurationOptions"
-                                    :key="item.id"
-                                    :label="item.title"
-                                    :value="item.id"
+                                        v-for="item in configurationOptions"
+                                        :key="item.id"
+                                        :label="item.title"
+                                        :value="item.id"
                                 />
                             </el-select>
                             <el-button icon="Operation" style="border-radius: 0 4px 4px 0;"
                                        @click="dialogTableVisible = true"></el-button>
                         </div>
                         <el-tabs
-                            v-model="editableTabsValue"
-                            class="api-tabs"
-                            editable
-                            type="card"
-                            @tab-remove="handleTabsDel"
-                            @tab-add="handleTabsAdd"
-                            @tab-change="tabChange"
+                                v-model="editableTabsValue"
+                                class="api-tabs"
+                                editable
+                                type="card"
+                                @tab-remove="handleTabsDel"
+                                @tab-add="handleTabsAdd"
+                                @tab-change="tabChange"
                         >
                             <div v-if="editableTabs.length<1"
                                  style="display: flex;align-items: center;justify-content: center;height: 100%;">
                                 <AddApiMode :func1="handleTabsEditFFF" :func2="importApi"/>
                             </div>
                             <el-tab-pane
-                                v-for="(item, index) in editableTabs"
-                                :key="item.name"
-                                :disabled="disabled"
-                                :name="item.name"
+                                    v-for="(item, index) in editableTabs"
+                                    :key="item.name"
+                                    :disabled="disabled"
+                                    :name="item.name"
                             >
                                 <template #label>
                                     <el-tooltip :content="item.title|| '新接口'" effect="light" placement="top">
@@ -124,16 +124,16 @@
                                     <div class="path-div">
                                         <el-form ref="ruleFormRef" :model="item" style="width: 100%;">
                                             <el-form-item
-                                                :rules=" {required: true, message: '如未配置环境请输入含 http / https 的完整 URL', trigger: 'blur'}"
-                                                prop="url">
+                                                    :rules=" {required: true, message: '如未配置环境请输入含 http / https 的完整 URL', trigger: 'blur'}"
+                                                    prop="url">
                                                 <el-input
-                                                    v-model="item.url"
-                                                    :size="size"
-                                                    autocomplete="off"
-                                                    class="input-with-select"
-                                                    clearable
-                                                    placeholder='如未配置环境请输入含 http / https 的完整 URL'
-                                                    spellcheck="false"
+                                                        v-model="item.url"
+                                                        :size="size"
+                                                        autocomplete="off"
+                                                        class="input-with-select"
+                                                        clearable
+                                                        placeholder='如未配置环境请输入含 http / https 的完整 URL'
+                                                        spellcheck="false"
                                                 >
                                                     <template #prepend>
                                                         <el-select v-model="item.method"
@@ -143,11 +143,11 @@
                                                                    input-style="font-weight: 900 !important"
                                                                    placeholder="GET">
                                                             <el-option
-                                                                v-for="item in $selections()"
-                                                                :key="item.value"
-                                                                :label="item.label"
-                                                                :style="{'color': item.color,'font-weight': 'bold'}"
-                                                                :value="item.value"
+                                                                    v-for="item in $selections()"
+                                                                    :key="item.value"
+                                                                    :label="item.label"
+                                                                    :style="{'color': item.color,'font-weight': 'bold'}"
+                                                                    :value="item.value"
 
                                                             />
                                                         </el-select>
@@ -170,11 +170,11 @@
                                                  class="tab2" model-value="Headers">
                                             <el-tab-pane label="Params">
                                                 <el-table
-                                                    :cell-class-name="rowClassName"
-                                                    :data="item.queryData"
-                                                    border
-                                                    height="calc(100%)"
-                                                    @cell-click="(row, column)=>cellClick(row, column, 0,item.queryData, index)"
+                                                        :cell-class-name="rowClassName"
+                                                        :data="item.queryData"
+                                                        border
+                                                        height="calc(100%)"
+                                                        @cell-click="(row, column)=>cellClick(row, column, 0,item.queryData, index)"
                                                 >
                                                     <el-table-column label="参数名"
                                                                      min-width="30%">
@@ -209,8 +209,8 @@
                                                                             单行
                                                                         </el-dropdown-item>
                                                                         <el-dropdown-item
-                                                                            icon="Document"
-                                                                            @click="batchAdd(0, index, editableTabs[index].queryData)">
+                                                                                icon="Document"
+                                                                                @click="batchAdd(0, index, editableTabs[index].queryData)">
                                                                             批量
                                                                         </el-dropdown-item>
                                                                     </el-dropdown-menu>
@@ -227,11 +227,11 @@
                                             </el-tab-pane>
                                             <el-tab-pane label="Headers" name="Headers">
                                                 <el-table
-                                                    :cell-class-name="rowClassName"
-                                                    :data="item.headersData"
-                                                    border
-                                                    height="calc(100%)"
-                                                    @cell-click="(row, column)=>cellClick(row, column, 1,item.headersData, index)"
+                                                        :cell-class-name="rowClassName"
+                                                        :data="item.headersData"
+                                                        border
+                                                        height="calc(100%)"
+                                                        @cell-click="(row, column)=>cellClick(row, column, 1,item.headersData, index)"
                                                 >
                                                     <el-table-column label="参数名"
                                                                      min-width="30%">
@@ -240,10 +240,10 @@
                                                                        filterable
                                                                        placeholder="参数名" remote>
                                                                 <el-option
-                                                                    v-for="item in headersOptions"
-                                                                    :key="item.value"
-                                                                    :label="item.label"
-                                                                    :value="item.value"
+                                                                        v-for="item in headersOptions"
+                                                                        :key="item.value"
+                                                                        :label="item.label"
+                                                                        :value="item.value"
                                                                 />
                                                             </el-select>
                                                         </template>
@@ -270,13 +270,13 @@
                                                                 <template #dropdown>
                                                                     <el-dropdown-menu>
                                                                         <el-dropdown-item
-                                                                            icon="Plus"
-                                                                            @click="addRow(editableTabs[index].headersData)">
+                                                                                icon="Plus"
+                                                                                @click="addRow(editableTabs[index].headersData)">
                                                                             单行
                                                                         </el-dropdown-item>
                                                                         <el-dropdown-item
-                                                                            icon="Document"
-                                                                            @click="batchAdd(1, index, editableTabs[index].headersData)">
+                                                                                icon="Document"
+                                                                                @click="batchAdd(1, index, editableTabs[index].headersData)">
                                                                             批量
                                                                         </el-dropdown-item>
                                                                     </el-dropdown-menu>
@@ -293,8 +293,8 @@
                                             </el-tab-pane>
                                             <el-tab-pane label="Body">
                                                 <el-tabs
-                                                    v-model="item.bodyType"
-                                                    class="tab3"
+                                                        v-model="item.bodyType"
+                                                        class="tab3"
                                                 >
                                                     <el-tab-pane label="none" name="none">
                                                         <el-empty :image-size="80" description="该请求没有请求体!"
@@ -302,11 +302,11 @@
                                                     </el-tab-pane>
                                                     <el-tab-pane label="form-data" name="form-data">
                                                         <el-table
-                                                            :cell-class-name="rowClassName"
-                                                            :data="item.formData"
-                                                            border
-                                                            height="calc(100%)"
-                                                            @cell-click="(row, column)=>cellClick(row, column, 2, item.formData, index)"
+                                                                :cell-class-name="rowClassName"
+                                                                :data="item.formData"
+                                                                border
+                                                                height="calc(100%)"
+                                                                @cell-click="(row, column)=>cellClick(row, column, 2, item.formData, index)"
                                                         >
                                                             <el-table-column label="参数名"
                                                                              min-width="25%">
@@ -321,10 +321,10 @@
                                                                     <el-select v-model="scope.row.type"
                                                                                placeholder="Select">
                                                                         <el-option
-                                                                            v-for="item in formOptions"
-                                                                            :key="item.value"
-                                                                            :label="item.label"
-                                                                            :value="item.value"
+                                                                                v-for="item in formOptions"
+                                                                                :key="item.value"
+                                                                                :label="item.label"
+                                                                                :value="item.value"
                                                                         />
                                                                     </el-select>
                                                                 </template>
@@ -366,13 +366,13 @@
                                                                         <template #dropdown>
                                                                             <el-dropdown-menu>
                                                                                 <el-dropdown-item
-                                                                                    icon="Plus"
-                                                                                    @click="addRow(editableTabs[index].formData)">
+                                                                                        icon="Plus"
+                                                                                        @click="addRow(editableTabs[index].formData)">
                                                                                     单行
                                                                                 </el-dropdown-item>
                                                                                 <el-dropdown-item
-                                                                                    icon="Document"
-                                                                                    @click="batchAdd(2, index, editableTabs[index].formData)">
+                                                                                        icon="Document"
+                                                                                        @click="batchAdd(2, index, editableTabs[index].formData)">
                                                                                     批量
                                                                                 </el-dropdown-item>
                                                                             </el-dropdown-menu>
@@ -390,11 +390,11 @@
                                                     <el-tab-pane label="x-www-form-urlencoded"
                                                                  name="x-www-form-urlencoded">
                                                         <el-table
-                                                            :cell-class-name="rowClassName"
-                                                            :data="item.formUrlencodedData"
-                                                            border
-                                                            height="calc(100%)"
-                                                            @cell-click="(row, column)=>cellClick(row, column, 3, item.formUrlencodedData, index)"
+                                                                :cell-class-name="rowClassName"
+                                                                :data="item.formUrlencodedData"
+                                                                border
+                                                                height="calc(100%)"
+                                                                @cell-click="(row, column)=>cellClick(row, column, 3, item.formUrlencodedData, index)"
                                                         >
                                                             <el-table-column label="参数名"
                                                                              min-width="25%">
@@ -409,10 +409,10 @@
                                                                     <el-select v-model="scope.row.type"
                                                                                placeholder="Select">
                                                                         <el-option
-                                                                            v-for="item in formUrlencodedOptions"
-                                                                            :key="item.value"
-                                                                            :label="item.label"
-                                                                            :value="item.value"
+                                                                                v-for="item in formUrlencodedOptions"
+                                                                                :key="item.value"
+                                                                                :label="item.label"
+                                                                                :value="item.value"
                                                                         />
                                                                     </el-select>
                                                                 </template>
@@ -439,13 +439,13 @@
                                                                         <template #dropdown>
                                                                             <el-dropdown-menu>
                                                                                 <el-dropdown-item
-                                                                                    icon="Plus"
-                                                                                    @click="addRow(editableTabs[index].formUrlencodedData)">
+                                                                                        icon="Plus"
+                                                                                        @click="addRow(editableTabs[index].formUrlencodedData)">
                                                                                     单行
                                                                                 </el-dropdown-item>
                                                                                 <el-dropdown-item
-                                                                                    icon="Document"
-                                                                                    @click="batchAdd(3, index, editableTabs[index].formUrlencodedData)">
+                                                                                        icon="Document"
+                                                                                        @click="batchAdd(3, index, editableTabs[index].formUrlencodedData)">
                                                                                     批量
                                                                                 </el-dropdown-item>
                                                                             </el-dropdown-menu>
@@ -486,13 +486,13 @@
                                                             >json格式化
                                                             </el-button>
                                                             <v-ace-editor
-                                                                v-model:value="item.rawData.text"
-                                                                :lang="item.rawData.type"
-                                                                :options="aceConfig.options"
-                                                                :readonly="aceConfig.readOnly"
-                                                                :theme="aceConfig.theme"
-                                                                style="height: 100%"
-                                                                wrap>
+                                                                    v-model:value="item.rawData.text"
+                                                                    :lang="item.rawData.type"
+                                                                    :options="aceConfig.options"
+                                                                    :readonly="aceConfig.readOnly"
+                                                                    :theme="aceConfig.theme"
+                                                                    style="height: 100%"
+                                                                    wrap>
                                                             </v-ace-editor>
                                                         </div>
 
@@ -502,11 +502,11 @@
                                             </el-tab-pane>
                                             <el-tab-pane label="Cookies">
                                                 <el-table
-                                                    :cell-class-name="rowClassName"
-                                                    :data="item.cookies"
-                                                    border
-                                                    height="calc(100%)"
-                                                    @cell-click="(row, column)=>cellClick(row, column, 4,item.cookies, index)"
+                                                        :cell-class-name="rowClassName"
+                                                        :data="item.cookies"
+                                                        border
+                                                        height="calc(100%)"
+                                                        @cell-click="(row, column)=>cellClick(row, column, 4,item.cookies, index)"
 
                                                 >
                                                     <el-table-column label="参数名"
@@ -542,8 +542,8 @@
                                                                             单行
                                                                         </el-dropdown-item>
                                                                         <el-dropdown-item
-                                                                            icon="Document"
-                                                                            @click="batchAdd(4, index, editableTabs[index].cookies)">
+                                                                                icon="Document"
+                                                                                @click="batchAdd(4, index, editableTabs[index].cookies)">
                                                                             批量
                                                                         </el-dropdown-item>
                                                                     </el-dropdown-menu>
@@ -737,9 +737,9 @@
                                                             <template #dropdown>
                                                                 <el-dropdown-menu>
                                                                     <el-dropdown-item
-                                                                        v-for="(item_drop, index_drop) in dropdownOptions"
-                                                                        :command="{item_drop, data:item.postCondition}"
-                                                                        :disabled="item_drop.divided">
+                                                                            v-for="(item_drop, index_drop) in dropdownOptions"
+                                                                            :command="{item_drop, data:item.postCondition}"
+                                                                            :disabled="item_drop.divided">
                                                                         <el-icon :color="item_drop.color" :size="18">
                                                                             <component :is="item_drop.icon"></component>
                                                                         </el-icon>
@@ -755,8 +755,8 @@
                                                 <el-scrollbar class="postcondition-box">
                                                     <el-collapse accordion>
                                                         <el-collapse-item
-                                                            v-for=" (item_son, index_son) in item.postCondition"
-                                                            :name="index_son+1">
+                                                                v-for=" (item_son, index_son) in item.postCondition"
+                                                                :name="index_son+1">
                                                             <template #title>
                                                                 <el-icon :color="item_son.color" class="icon-style">
                                                                     <component :is="item_son.icon"></component>
@@ -770,7 +770,7 @@
                                                                             item_son.expression
                                                                         }}
                                                             <span
-                                                                v-if="item_son.continueExtract.is===1">{{
+                                                                    v-if="item_son.continueExtract.is===1">{{
                                                                     '  分隔符:[' + item_son.continueExtract.separator + ']  索引:' + item_son.continueExtract.index + ' '
                                                                 }} </span>
                                                             <span v-if="item_son.type===0"> {{
@@ -779,13 +779,13 @@
                                                         </span>
                                                                 </div>
                                                                 <div
-                                                                    style="padding: 0 10px;display: flex;align-items: center;"
-                                                                    @click.stop>
+                                                                        style="padding: 0 10px;display: flex;align-items: center;"
+                                                                        @click.stop>
                                                                     <el-switch
-                                                                        v-model="item_son.postConditionSwitch"
-                                                                        :active-value=1
-                                                                        :inactive-value=0
-                                                                        size="small"
+                                                                            v-model="item_son.postConditionSwitch"
+                                                                            :active-value=1
+                                                                            :inactive-value=0
+                                                                            size="small"
                                                                     />
                                                                     <el-button icon="Delete" link
                                                                                style="margin-left: 10px;"
@@ -795,9 +795,9 @@
                                                             </template>
                                                             <div style="display: flex;justify-content: center;">
                                                                 <el-form
-                                                                    label-position="right"
-                                                                    label-width="120px"
-                                                                    style="width: 80%;"
+                                                                        label-position="right"
+                                                                        label-width="120px"
+                                                                        style="width: 80%;"
                                                                 >
                                                                     <el-form-item v-if="item_son.type ===0"
                                                                                   label="断言名称"
@@ -813,10 +813,10 @@
                                                                                    placeholder="Select"
                                                                                    style="width: 100%;">
                                                                             <el-option
-                                                                                v-for="item in sourceOptions"
-                                                                                :key="item.value"
-                                                                                :label="item.label"
-                                                                                :value="item.value"
+                                                                                    v-for="item in sourceOptions"
+                                                                                    :key="item.value"
+                                                                                    :label="item.label"
+                                                                                    :value="item.value"
                                                                             />
                                                                         </el-select>
                                                                     </el-form-item>
@@ -827,11 +827,11 @@
                                                                                       placeholder="正则表达式"
                                                                                       style="flex: 1;"/>
                                                                             <span
-                                                                                style="margin: 0 8px;align-items: center;display: flex;">
+                                                                                    style="margin: 0 8px;align-items: center;display: flex;">
                                                                     索引
                                                                   <el-tooltip effect="light" placement="top">
                                                                     <template
-                                                                        #content> 提取结果默认为数组，默认索引0 </template>
+                                                                            #content> 提取结果默认为数组，默认索引0 </template>
                                                                     <el-icon :size="15" color="#cfcfcf">
                                                                       <QuestionFilled/>
                                                                     </el-icon>
@@ -839,10 +839,10 @@
                                                                     :
                                                                 </span>
                                                                             <el-input-number
-                                                                                v-model="item_son.expressionIndex"
-                                                                                :min="0"
-                                                                                controls-position="right"
-                                                                                style="width: 80px;"
+                                                                                    v-model="item_son.expressionIndex"
+                                                                                    :min="0"
+                                                                                    controls-position="right"
+                                                                                    style="width: 80px;"
                                                                             />
                                                                         </div>
                                                                         <div v-if="item_son.resMetaData===1"
@@ -851,11 +851,11 @@
                                                                                       placeholder="Json Path 表达式"
                                                                                       style="flex: 1;"/>
                                                                             <span
-                                                                                style="margin: 0 8px;align-items: center;display: flex;">
+                                                                                    style="margin: 0 8px;align-items: center;display: flex;">
                                                                     继续提取
                                                                   <el-tooltip effect="light" placement="top">
                                                                     <template
-                                                                        #content> 对提取结果进行深度提取，比如分割字符串继续提取 </template>
+                                                                            #content> 对提取结果进行深度提取，比如分割字符串继续提取 </template>
                                                                     <el-icon :size="15" color="#cfcfcf">
                                                                       <QuestionFilled/>
                                                                     </el-icon>
@@ -863,26 +863,26 @@
                                                                     :
                                                                 </span>
                                                                             <el-switch
-                                                                                v-model="item_son.continueExtract.is"
-                                                                                :active-value=1
-                                                                                :inactive-value=0
-                                                                                size="small"
+                                                                                    v-model="item_son.continueExtract.is"
+                                                                                    :active-value=1
+                                                                                    :inactive-value=0
+                                                                                    size="small"
                                                                             />
                                                                         </div>
                                                                     </el-form-item>
                                                                     <el-form-item
-                                                                        v-if="item_son.resMetaData===1&&item_son.continueExtract.is==1"
-                                                                        label="继续提取">
+                                                                            v-if="item_son.resMetaData===1&&item_son.continueExtract.is==1"
+                                                                            label="继续提取">
                                                                         <div class="p-content-style">
                                                                             <el-input
-                                                                                v-model="item_son.continueExtract.separator"
-                                                                                placeholder="字符串分隔符号">
+                                                                                    v-model="item_son.continueExtract.separator"
+                                                                                    placeholder="字符串分隔符号">
                                                                                 <template #prepend>分隔符</template>
                                                                             </el-input>
                                                                             <el-input-number
-                                                                                v-model="item_son.continueExtract.index"
-                                                                                :min="0"
-                                                                                controls-position="right">
+                                                                                    v-model="item_son.continueExtract.index"
+                                                                                    :min="0"
+                                                                                    controls-position="right">
                                                                                 <template #prepend>索引</template>
                                                                             </el-input-number>
                                                                         </div>
@@ -890,32 +890,32 @@
                                                                     </el-form-item>
                                                                     <el-form-item v-if="item_son.type===0" label="断言">
                                                                         <el-input
-                                                                            v-model="item_son.assert.expected"
-                                                                            class="input-with-select"
-                                                                            placeholder="预期结果"
+                                                                                v-model="item_son.assert.expected"
+                                                                                class="input-with-select"
+                                                                                placeholder="预期结果"
                                                                         >
                                                                             <template #prepend>
                                                                                 <el-select v-model="item_son.assert.way"
                                                                                            placeholder="Select"
                                                                                            style="width: 100px">
                                                                                     <el-option
-                                                                                        v-for="item in assertOptions"
-                                                                                        :key="item.value"
-                                                                                        :label="item.label"
-                                                                                        :value="item.value"
+                                                                                            v-for="item in assertOptions"
+                                                                                            :key="item.value"
+                                                                                            :label="item.label"
+                                                                                            :value="item.value"
                                                                                     />
                                                                                 </el-select>
                                                                             </template>
                                                                             <template #append>
                                                                                 <el-select
-                                                                                    v-model="item_son.assert.expectedType"
-                                                                                    placeholder="类型"
-                                                                                    style="width: 80px;">
+                                                                                        v-model="item_son.assert.expectedType"
+                                                                                        placeholder="类型"
+                                                                                        style="width: 80px;">
                                                                                     <el-option
-                                                                                        v-for="item in dataOptions"
-                                                                                        :key="item.value"
-                                                                                        :label="item.label"
-                                                                                        :value="item.value"
+                                                                                            v-for="item in dataOptions"
+                                                                                            :key="item.value"
+                                                                                            :label="item.label"
+                                                                                            :value="item.value"
                                                                                     />
                                                                                 </el-select>
                                                                             </template>
@@ -934,9 +934,9 @@
                                                             <template #dropdown>
                                                                 <el-dropdown-menu>
                                                                     <el-dropdown-item
-                                                                        v-for="(item_drop, index_drop) in dropdownOptions"
-                                                                        :command="{item_drop, data:item.postCondition}"
-                                                                        :disabled="item_drop.divided">
+                                                                            v-for="(item_drop, index_drop) in dropdownOptions"
+                                                                            :command="{item_drop, data:item.postCondition}"
+                                                                            :disabled="item_drop.divided">
                                                                         <el-icon :color="item_drop.color" :size="18">
                                                                             <component :is="item_drop.icon"></component>
                                                                         </el-icon>
@@ -1031,10 +1031,10 @@
                 <el-button link type="primary" @click="reportList()">刷新</el-button>
             </div>
             <el-table
-                ref="reportTableRef"
-                :data="reportData"
-                style="width: 100%;height: calc(100vh - 180px);overflow: auto;"
-                @selection-change="reportSelectionChange"
+                    ref="reportTableRef"
+                    :data="reportData"
+                    style="width: 100%;height: calc(100vh - 180px);overflow: auto;"
+                    @selection-change="reportSelectionChange"
             >
                 <el-table-column type="selection" width="55"/>
                 <el-table-column label="ID" prop="id" width="120"/>
@@ -1051,8 +1051,8 @@
                             <el-tooltip content="删除报告" placement="top">
                                 <div style="display: flex;align-items: center;">
                                     <el-popconfirm
-                                        title="您确定要删除该数据?"
-                                        @confirm.prevent="cleanReport(scope.$index, scope.row.id)">
+                                            title="您确定要删除该数据?"
+                                            @confirm.prevent="cleanReport(scope.$index, scope.row.id)">
                                         <template #reference>
                                             <el-button circle icon="Delete" size="small"
                                                        type="danger"></el-button>
@@ -1093,9 +1093,9 @@
         <div class="apisearch">
             <el-input v-model="apisearchContent" clearable placeholder="选择接口" @input="searchApis"/>
             <el-table
-                ref="apisTableRef"
-                :data="apisData"
-                @selection-change="apisSelectionChange"
+                    ref="apisTableRef"
+                    :data="apisData"
+                    @selection-change="apisSelectionChange"
             >
                 <el-table-column type="selection" width="55"/>
                 <el-table-column label="ID" prop="id" width="180"/>
@@ -1127,7 +1127,7 @@
                     <el-radio-button label=" ">空格模式</el-radio-button>
                 </el-radio-group>
                 <pre
-                    style="margin-left: 20px;color: #999999;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;pointer-events: none;">（注：多条数据以换行分割）</pre>
+                        style="margin-left: 20px;color: #999999;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;pointer-events: none;">（注：多条数据以换行分割）</pre>
             </div>
             <el-input v-model="textareavalue"
                       :placeholder="placeholderText"
@@ -1146,17 +1146,17 @@
 
     <!--curl弹窗-->
     <el-dialog
-        v-model="dialogCurl"
-        title="cURL 解析"
-        width="50%"
-        destroy-on-close
-        :before-close="curlClose"
+            v-model="dialogCurl"
+            title="cURL 解析"
+            width="50%"
+            destroy-on-close
+            :before-close="curlClose"
     >
         <el-input
-            v-model="curlText"
-            :rows="10"
-            type="textarea"
-            placeholder="右键单击请求
+                v-model="curlText"
+                :rows="10"
+                type="textarea"
+                placeholder="右键单击请求
 单击“复制”→ “复制为 cURL”
 粘贴到输入框"
         />
@@ -1171,9 +1171,9 @@
     </el-dialog>
     <!--函数助手弹窗-->
     <el-dialog
-        v-model="dialogFun"
-        title="函数助手"
-        width="38%"
+            v-model="dialogFun"
+            title="函数助手"
+            width="38%"
     >
         <FunctionHelper/>
     </el-dialog>
@@ -1216,25 +1216,33 @@ const props = defineProps({
 })
 const emits = defineEmits(["getConfig",])
 const {proxy} = getCurrentInstance()
+const historyData = ref([])
 // 接口选择框
+const apisTableRef = ref()
+const apisSelection = ref()
 const openApisDialog = () => {
     apiSelectionVisible.value = true
     const condition = {
         project__id: projectId
     }
     apis.apiList(condition)
-        .then(({data}) => {
-            const newObj = data.data.map(item => ({id: item.id, title: item.title}))
-            apisData.value = newObj
-            tableData.value = newObj
-        })
-        .catch((err) => {
-            ElMessage.error(err)
-        })
+            .then(({data}) => {
+                const newObj = data.data.map(item => ({id: item.id, title: item.title}))
+                apisData.value = newObj
+                tableData.value = newObj
+                apisData.value.forEach((row) => {
+                    for (let i = 0; i < historyData.value.length; i++) {
+                        if (row.id === historyData.value[i].id) {
+                            nextTick(() => {
+                                apisTableRef.value.toggleRowSelection(row, true)
+                            })
+                        }
+                    }
+                })
+            })
 }
 const apiSelectionVisible = ref(false)
 const apisearchContent = ref("")
-const apisSelection = ref()
 const apisearchClose = () => {
     apisearchContent.value = ""
     apisData.value = null
@@ -1254,13 +1262,14 @@ const searchApis = (val) => {
 // 确认添加步骤
 const addSteps = () => {
     apisearchClose()
-    historyData.value.push(...apisSelection.value)
+    console.log(apisSelection)
+    historyData.value = apisSelection.value
     apis.editCase(props.caseId, {steps: historyData.value.map(item => (item.id))})
-        .then(() => {
-            ElMessage.success("添加成功！")
-        })
+            .then(() => {
+                ElMessage.success("添加成功！")
+            })
 }
-const apisData = ref()
+const apisData = ref([])
 const tableData = ref([
     {
         id: 1,
@@ -1316,6 +1325,7 @@ const caseForm = ref({
     caseName: "",
     apis: []
 })
+
 // 接口选择狂
 
 const dialogFun = ref(false)
@@ -1334,40 +1344,40 @@ const reportSelectionChange = (val) => {
 }
 const reportList = () => {
     apis.reportList({case: props.caseId})
-        .then(({data}) => {
-            reportData.value = data.data
-        })
+            .then(({data}) => {
+                reportData.value = data.data
+            })
 }
 reportList()
 const cleanReport = (index = null, id = null) => {
     if (id) {
         apis.delReport(id)
-            .then(({data}) => {
-                ElMessage.success('删除成功！');
-                reportData.value.splice(index, 1)
-            })
+                .then(({data}) => {
+                    ElMessage.success('删除成功！');
+                    reportData.value.splice(index, 1)
+                })
     } else {
         const ids = reportSelection.value.map(item => (item.id))
         if (ids.length !== 0) {
             ElMessageBox.confirm(
-                '数据删除后不可恢复，确定删除吗?',
-                '注意',
-                {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning',
-                }
+                    '数据删除后不可恢复，确定删除吗?',
+                    '注意',
+                    {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning',
+                    }
             )
-                .then(() => {
-                    apis.delReport(ids)
-                        .then(({data}) => {
-                            ElMessage.success('移除成功！');
-                            reportData.value = reportData.value.filter(item => !data.data.map(item => (item.id)).includes(item.id))
-                        })
-                })
-                .catch(() => {
-                    ElMessage.info('取消删除！')
-                })
+                    .then(() => {
+                        apis.delReport(ids)
+                                .then(({data}) => {
+                                    ElMessage.success('移除成功！');
+                                    reportData.value = reportData.value.filter(item => !data.data.map(item => (item.id)).includes(item.id))
+                                })
+                    })
+                    .catch(() => {
+                        ElMessage.info('取消删除！')
+                    })
 
         } else {
             ElMessage.error('请至少选择一条数据！')
@@ -1392,9 +1402,9 @@ const onEnd = () => {
     console.log(historyData.value)
     console.log(historyData.value.map(item => (item.id)))
     apis.editCase(props.caseId, {steps: historyData.value.map(item => (item.id))})
-        .then(() => {
-            ElMessage.success("更新排序成功！")
-        })
+            .then(() => {
+                ElMessage.success("更新排序成功！")
+            })
 
 };
 
@@ -1556,10 +1566,10 @@ const configList = () => {
     apis.configList({
         project__id: props.projectId
     })
-        .then(({data}) => {
-            configurationOptions.value = data.data.slice(1);
-            emits('getConfig', configurationOptions.value)
-        })
+            .then(({data}) => {
+                configurationOptions.value = data.data.slice(1);
+                emits('getConfig', configurationOptions.value)
+            })
 
 }
 const envConfigurationClose = (done) => {
@@ -1586,12 +1596,12 @@ const selectConfig = (val) => {
             }
             console.log(tab)
             apis.editApi(tab.id, tab)
-                .then(() => {
-                    ElMessage.success("切换环境成功！")
-                })
-                .catch((err) => {
-                    ElMessage.error(err)
-                })
+                    .then(() => {
+                        ElMessage.success("切换环境成功！")
+                    })
+                    .catch((err) => {
+                        ElMessage.error(err)
+                    })
         }
     })
 }
@@ -2239,7 +2249,7 @@ const labelClick = (item) => {
         document.getElementById(`${item.name}`).focus()
     })
 }
-const historyData = ref([])
+
 
 // const clickHistory = (id) => {
 //     if (editableTabs.value.length === 0) {
@@ -2263,13 +2273,13 @@ const historyData = ref([])
 // }
 const addApiTab = (id) => {
     apis.apiDetail(id)
-        .then(({data}) => {
-            const newTabName = `${++tabIndex}`
-            data.data['editLabel'] = false
-            data.data['name'] = newTabName
-            editableTabs.value.push(data.data)
-            editableTabsValue.value = newTabName
-        })
+            .then(({data}) => {
+                const newTabName = `${++tabIndex}`
+                data.data['editLabel'] = false
+                data.data['name'] = newTabName
+                editableTabs.value.push(data.data)
+                editableTabsValue.value = newTabName
+            })
 }
 const clickHistory = (id) => {
     console.log(typeof id)
@@ -2310,13 +2320,13 @@ let responseHeight = ref(0)
 
 const stepList = () => {
     apis.stepList(props.caseId)
-        .then(({data}) => {
-            if (data.code === 200) {
-                historyData.value = data.data
-            } else {
-                ElMessage.error(data.msg)
-            }
-        })
+            .then(({data}) => {
+                if (data.code === 200) {
+                    historyData.value = data.data
+                } else {
+                    ElMessage.error(data.msg)
+                }
+            })
 }
 stepList()
 onMounted(() => {
@@ -2330,12 +2340,12 @@ onMounted(() => {
 // 删除用例步骤
 const delStep = (data, delId) => {
     apis.editCase(props.caseId, {steps: data.map(item => (item.id))})
-        .then(() => {
-            ElMessage.success("删除成功！")
-            historyData.value = data
-            const targetName = editableTabs.value.filter((tab) => tab.id === delId)[0]?.name;
-            handleTabsDel(targetName);
-        })
+            .then(() => {
+                ElMessage.success("删除成功！")
+                historyData.value = data
+                const targetName = editableTabs.value.filter((tab) => tab.id === delId)[0]?.name;
+                handleTabsDel(targetName);
+            })
 }
 
 const cleanSteps = () => {
@@ -2367,15 +2377,15 @@ const sendRequest = (obj) => {
     loading1.value = true
     obj.response = {};
     apis.apiSend(obj)
-        .then(res => {
-            obj.response = res.data
-            console.log(obj.response)
-            loading1.value = false
-        })
-        .catch(err => {
-            obj.response = err.response.data
-            loading1.value = false
-        })
+            .then(res => {
+                obj.response = res.data
+                console.log(obj.response)
+                loading1.value = false
+            })
+            .catch(err => {
+                obj.response = err.response.data
+                loading1.value = false
+            })
 
 }
 // 保存请求
@@ -2401,37 +2411,37 @@ const saveRequest = (obj) => {
         // 更新api
         console.log("更新")
         apis.editApi(apiId, obj)
-            .then(({data}) => {
-                ElMessage.success(data.msg)
-                loading2.value = false
-                apiPage.value = 2
-                // apiList();
-                for (const index in historyData.value) {
-                    if (historyData.value[index].id === apiId) {
-                        historyData.value[index].title = data.data.title
-                        historyData.value[index].url = data.data.url
-                        historyData.value[index].method = data.data.method
-                        break
+                .then(({data}) => {
+                    ElMessage.success(data.detail)
+                    loading2.value = false
+                    apiPage.value = 2
+                    // apiList();
+                    for (const index in historyData.value) {
+                        if (historyData.value[index].id === apiId) {
+                            historyData.value[index].title = data.data.title
+                            historyData.value[index].url = data.data.url
+                            historyData.value[index].method = data.data.method
+                            break
+                        }
                     }
-                }
-            })
-            .catch(() => {
-                loading2.value = false
-            })
+                })
+                .catch(() => {
+                    loading2.value = false
+                })
     } else {
         // 新增api
         //  console.log("新增")
         apis.addApi(obj)
-            .then(({data}) => {
-                obj.id = data.data.id
-                ElMessage.success(data.msg)
-                //  console.log(data)
-                historyData.value.unshift(data.data)
-                loading2.value = false
-            })
-            .catch(() => {
-                loading2.value = false
-            })
+                .then(({data}) => {
+                    obj.id = data.data.id
+                    ElMessage.success("新增成功")
+                    //  console.log(data)
+                    historyData.value.unshift(data.data)
+                    loading2.value = false
+                })
+                .catch(() => {
+                    loading2.value = false
+                })
     }
 
 

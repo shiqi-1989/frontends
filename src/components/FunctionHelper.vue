@@ -33,8 +33,8 @@
                 <el-date-picker v-if="scope.row.type==='Time'"
                                 v-model="scope.row.value"
                                 type="datetime"
-                                format="YYYY/MM/DD hh:mm:ss"
-                                value-format="YYYY-MM-DD hh:mm:ss"
+                                format="YYYY-MM-DD HH:mm:ss"
+                                value-format="YYYY-MM-DD HH:mm:ss"
                                 style="width: 100%;"
                                 placeholder="Select date and time"
                 />

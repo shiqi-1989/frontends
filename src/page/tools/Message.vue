@@ -73,7 +73,7 @@
             </el-card>
         </el-col>
     </el-row>
-    <!--    编辑/新增弹窗-->
+    <!--编辑/新增弹窗-->
     <el-dialog
             v-model="table.showEdit"
             :before-close="handleClose"

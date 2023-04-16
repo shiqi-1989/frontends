@@ -120,7 +120,7 @@ const redirect = () => {
     let redirect = router.currentRoute.value.query.redirect
     if (redirect) {
         return redirect
-    } else {
+    } else {137166100
         return redirect = '/'
     }
 }
