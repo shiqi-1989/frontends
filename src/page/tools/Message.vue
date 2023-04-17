@@ -317,9 +317,10 @@ const submitForm = (formEl) => {
     .clear {
         visibility: hidden;
         position: absolute;
+        opacity: 0.5;
         cursor: pointer;
         bottom: 25px;
-        right: 28px;
+        right: 25px;
     }
 
     .el-card__body:hover .clear {

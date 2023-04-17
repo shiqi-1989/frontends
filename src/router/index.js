@@ -140,7 +140,7 @@ const routes = [
             {// 测试页面
                 path: '/testInfo',
                 name: 'testInfo',
-                component: () => import(/*webpackChunkName:'UserInfo'*/ '../page/test/Test.vue'),
+                component: () => import(/*webpackChunkName:'UserInfo'*/ '../page/test/test.vue'),
                 meta: {requireAuth: true, title: '测试数据'}
             },
             // {//项目列表
@@ -182,8 +182,6 @@ const routes = [
             //
             //     ]
             // },
-
-
         ]
     },
 

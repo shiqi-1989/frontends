@@ -21,7 +21,8 @@
             >
                 <el-form-item label="" prop="mobile">
                     <el-input v-model="user.mobile" clearable maxlength="11"
-                              oninput="value=value.replace(/\D/g,'')" placeholder="请输入账号" spellcheck="false"
+                              @input="value => user.mobile = value.replace(/\D/g,'')"
+                              placeholder="请输入账号" spellcheck="false"
                               type="tel">
                         <template #prefix>
                             <el-icon :size="size" class="el-input__icon">
@@ -73,7 +74,7 @@ import apis from '../../../api/api'
 
 const ruleFormRef = ref(FormInstance)
 const router = useRouter()
-const reg = ref("注册")
+let reg = ref("注册")
 const user = reactive({
     mobile: "",
     username: "",
@@ -105,7 +106,7 @@ const background_plate = computed(() => {
 const rules = reactive({
     mobile: [
         {required: true, message: "账号不能为空", trigger: 'blur'},
-        {pattern: /^1[3456789]\d{9}$/, message: "账号必须11有效手机号", trigger: "blur"}
+        {pattern: /^1(3|4|5|7|8)\d{9}$/, message: "账号必须11有效手机号", trigger: "blur"}
     ],
     username: [{required: true, message: "用户名不能为空", trigger: 'blur'},],
     password: [{required: true, message: "密码不能为空", trigger: 'blur'},],
@@ -120,7 +121,8 @@ const redirect = () => {
     let redirect = router.currentRoute.value.query.redirect
     if (redirect) {
         return redirect
-    } else {137166100
+    } else {
+        137166100
         return redirect = '/'
     }
 }
@@ -166,6 +168,7 @@ const submitForm = (formEl, e) => {
                 register()
             }
         } else {
+            console.log(user)
             console.log('error submit!')
             return false
         }
