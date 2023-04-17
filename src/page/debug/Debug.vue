@@ -2128,8 +2128,11 @@ const saveRequest = (obj) => {
         }
     }
     const newObj = JSON.parse(JSON.stringify(obj))
-    delete newObj.response.data
-    delete newObj.response.postConditionResult
+     newObj.response = {
+        status:  obj.response.status,
+        startTime: obj.response.startTime,
+        duration:  obj.response.duration,
+     }
     if (newObj.rawData.type === 'json') {
         try {
             newObj.rawData.text = JSON.stringify(JSON.parse(newObj.rawData.text))

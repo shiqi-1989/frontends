@@ -1087,13 +1087,13 @@
         </template>
     </el-dialog>
     <!--函数助手弹窗-->
-      <el-dialog
-      v-model="dialogFun"
-      title="函数助手"
-      width="38%"
-  >
-    <FunctionHelper/>
-  </el-dialog>
+    <el-dialog
+            v-model="dialogFun"
+            title="函数助手"
+            width="38%"
+    >
+        <FunctionHelper/>
+    </el-dialog>
 </template>
 
 <script setup>
@@ -2213,16 +2213,17 @@ const saveRequest = (obj) => {
         }
     }
     const newObj = JSON.parse(JSON.stringify(obj))
-    delete newObj.response.data
-    delete newObj.response.postConditionResult
+    newObj.response = {
+        status: obj.response.status,
+        startTime: obj.response.startTime,
+        duration: obj.response.duration,
+    }
     if (newObj.rawData.type === 'json') {
         try {
             newObj.rawData.text = JSON.stringify(JSON.parse(newObj.rawData.text))
         } catch (e) {
         }
     }
-    // console.log(newObj)
-
     if (apiId) {
         // 更新api
         console.log("更新")
@@ -2249,17 +2250,10 @@ const saveRequest = (obj) => {
                     ElMessage.success(data.detail)
                     console.log(data)
                     historyData.value.unshift(data.data)
-                    loading2.value = false
-                })
-                .catch(() => {
-                    loading2.value = false
                 })
     }
-
-
 }
 const submitForm = async (formEl, index, item, num) => {
-
     if (!formEl) return
     await formEl[index].validate((valid, fields) => {
         if (valid) {

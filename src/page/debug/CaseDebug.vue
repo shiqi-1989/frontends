@@ -2390,7 +2390,6 @@ const sendRequest = (obj) => {
 }
 // 保存请求
 const saveRequest = (obj) => {
-    loading2.value = true
     const apiId = obj.id
     for (const item of obj.formData) {
         if (item.name !== '') {
@@ -2406,7 +2405,18 @@ const saveRequest = (obj) => {
         }
 
     }
-    console.log(obj)
+    const newObj = JSON.parse(JSON.stringify(obj))
+    newObj.response = {
+        status: obj.response.status,
+        startTime: obj.response.startTime,
+        duration: obj.response.duration,
+    }
+    if (newObj.rawData.type === 'json') {
+        try {
+            newObj.rawData.text = JSON.stringify(JSON.parse(newObj.rawData.text))
+        } catch (e) {
+        }
+    }
     if (apiId) {
         // 更新api
         console.log("更新")
@@ -2425,9 +2435,6 @@ const saveRequest = (obj) => {
                         }
                     }
                 })
-                .catch(() => {
-                    loading2.value = false
-                })
     } else {
         // 新增api
         //  console.log("新增")
@@ -2437,14 +2444,8 @@ const saveRequest = (obj) => {
                     ElMessage.success("新增成功")
                     //  console.log(data)
                     historyData.value.unshift(data.data)
-                    loading2.value = false
-                })
-                .catch(() => {
-                    loading2.value = false
                 })
     }
-
-
 }
 const submitForm = async (formEl, index, item, num) => {
     if (!formEl) return
@@ -2457,7 +2458,7 @@ const submitForm = async (formEl, index, item, num) => {
                 saveRequest(item)
             }
         } else {
-            //  console.log('error submit!', fields)
+            console.log('error submit!', fields)
         }
     })
 }
