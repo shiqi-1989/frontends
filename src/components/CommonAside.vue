@@ -137,6 +137,11 @@ const menuData = [
         icon: 'Promotion',
         title: '测试模块',
         subClass: []
+    }, {
+        index: "testDebug",
+        icon: 'Promotion',
+        title: '测试Debug',
+        subClass: []
     },
 ]
 

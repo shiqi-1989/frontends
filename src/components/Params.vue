@@ -1,11 +1,10 @@
 <template>
-    <el-button @click="get_params_data">子组件</el-button>
     <el-table
             :cell-class-name="rowClassName"
-            :data="queryData"
+            :data="paramData"
             border
             height="calc(100%)"
-            @cell-click="(row, column)=>cellClick(row, column, 0,queryData)"
+            @cell-click="(row, column)=>cellClick(row, column, 0,paramData)"
 
     >
         <el-table-column label="参数名"
@@ -37,7 +36,7 @@
                     <template #dropdown>
                         <el-dropdown-menu>
                             <el-dropdown-item icon="Plus"
-                                              @click="addRow(queryData)">
+                                              @click="addRow(paramData)">
                                 单行
                             </el-dropdown-item>
                             <el-dropdown-item
@@ -51,11 +50,11 @@
             </template>
             <template #default="scope">
                 <el-button icon="Close" link size="small" style="width: 100%"
-                           @click.prevent="deleteRow(item.queryData,scope.$index)"/>
+                           @click.prevent="deleteRow(paramData,scope.$index)"/>
             </template>
         </el-table-column>
     </el-table>
-    <BatchAdd ref="batchAddRef" :batch-data="queryData" @getData="getData"></BatchAdd>
+    <BatchAdd ref="batchAddRef" :batch-data="paramData" @getData="getData"></BatchAdd>
 
 
 </template>
@@ -65,7 +64,7 @@ import BatchAdd from "../components/BatchAdd.vue"
 import {ref} from "vue";
 
 const props = defineProps({
-    queryData: Object,
+    paramData: Object,
 })
 const emits = defineEmits(["getParams",])
 const batchAddRef = ref(null)
@@ -90,30 +89,19 @@ const addRow = (val) => {
         selected: true
     })
 }
-const addRowType = (val) => {
-    val.push({
-        name: '',
-        value: '',
-        selected: true
-    })
+
+const deleteRow = (val, index) => {
+    val.splice(index, 1)
 }
 const batchAdd = () => {
     batchAddRef.value.show = true;
     batchAddRef.value.getKeyValue('1');
 }
 
-const get_params_data = () => {
-    // batchAddRef.value.show = true;
-    console.log("--------------------------------")
-    console.log(batchAddRef.value.show)
-}
 const getData = (val) => {
     console.log(val)
     emits('getParams', val);
 }
-defineExpose({
-    get_params_data
-})
 </script>
 
 <style lang="less" scoped>

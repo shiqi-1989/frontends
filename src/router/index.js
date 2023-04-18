@@ -143,6 +143,12 @@ const routes = [
                 component: () => import(/*webpackChunkName:'UserInfo'*/ '../page/test/test.vue'),
                 meta: {requireAuth: true, title: '测试数据'}
             },
+            {// 测试debug
+                path: '/testDebug',
+                name: 'testDebug',
+                component: () => import(/*webpackChunkName:'UserInfo'*/ '../page/test/Debug.vue'),
+                meta: {requireAuth: true, title: '测试debug'}
+            },
             // {//项目列表
             //     path: '/ProjectList',
             //     name: 'ProjectList',
