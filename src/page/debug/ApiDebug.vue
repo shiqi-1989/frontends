@@ -2182,6 +2182,18 @@ const sendRequest = (obj) => {
         ElMessage.error("如未配置环境请输入含 http / https 的完整 URL")
         return
     }
+    for (const item of obj.formData) {
+        if (item.name !== '') {
+            if (item.type === 'file' && item.fileList.length > 0) {
+                for (let i = 0; i < item.fileList.length; i++) {
+                    item.fileList[i].raw = {
+                        uid: item.fileList[i].raw.uid,
+                        type: item.fileList[i].raw.type
+                    }
+                }
+            }
+        }
+    }
     // 发送按钮loading
     // loading1.value = true
     obj.response = {};

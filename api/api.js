@@ -186,7 +186,7 @@ const apis = {
     },
     // 上传文件
     uploadFile() {
-        return `/upload_file`
+        return `/interface/upload_file`
     },
     // 删除文件
     delFile(id) {
@@ -253,7 +253,7 @@ const apis = {
         return instance.post(`/toolsMessage/get_msg`, params)
     },
     // 验证码工具更新配置
-    messageEdit(id,params) {
+    messageEdit(id, params) {
         return instance.patch(`/toolsMessage/${id}`, params)
     },
     // 验证码工具新增

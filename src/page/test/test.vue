@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import Params from "../../components/Params.vue"
+import Params from "../subcomponent/Params.vue"
 import {ref, reactive} from "vue";
 
 const Data = reactive([{

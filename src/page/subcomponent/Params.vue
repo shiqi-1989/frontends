@@ -10,7 +10,17 @@
         <el-table-column label="参数名"
                          min-width="30%">
             <template #default="scope">
-                <el-input v-model="scope.row.name" clearable spellcheck="false"/>
+                <el-select v-if="isHeaders" v-model="scope.row.name" allow-create clearable
+                           filterable
+                           placeholder="参数名" remote>
+                    <el-option
+                            v-for="item in headersOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                    />
+                </el-select>
+                <el-input v-else v-model="scope.row.name" clearable spellcheck="false"/>
             </template>
         </el-table-column>
         <el-table-column label="参数值"
@@ -60,15 +70,63 @@
 </template>
 
 <script setup>
-import BatchAdd from "../components/BatchAdd.vue"
+import BatchAdd from "./BatchAdd.vue"
 import {ref} from "vue";
 
 const props = defineProps({
     paramData: Object,
+    isHeaders: Boolean
 })
 const emits = defineEmits(["getParams",])
 const batchAddRef = ref(null)
 const size = ref("large")
+const headersOptions = [
+    {
+        value: 'Accept',
+        label: 'Accept',
+    },
+    {
+        value: 'Accept-charset',
+        label: 'Accept-charset',
+    },
+    {
+        value: 'Accept-Encoding',
+        label: 'Accept-Encoding',
+    },
+    {
+        value: 'Cookie',
+        label: 'Cookie',
+    },
+    {
+        value: 'Content-Length',
+        label: 'Content-Length',
+    },
+    {
+        value: 'Content-Type',
+        label: 'Content-Type',
+    },
+    {
+        value: 'Connection',
+        label: 'Connection',
+    },
+    {
+        value: 'Date',
+        label: 'Date',
+    },
+    {
+        value: 'Referer',
+        label: 'Referer',
+    },
+    {
+        value: 'User-Agent',
+        label: 'User-Agent',
+    },
+    {
+        value: 'Host',
+        label: 'Host',
+    },
+]
+
 const rowClassName = ({row, column, rowIndex, columnIndex}) => {
     row.index = rowIndex
     column.index = columnIndex

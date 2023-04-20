@@ -139,7 +139,7 @@ const menuData = [
         subClass: []
     }, {
         index: "testDebug",
-        icon: 'Promotion',
+        icon: 'Operation',
         title: '测试Debug',
         subClass: []
     },

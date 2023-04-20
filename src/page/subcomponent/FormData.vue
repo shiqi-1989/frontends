@@ -2,6 +2,7 @@
     <el-table
             :cell-class-name="rowClassName"
             :data="formData"
+            :auto-upload="false"
             border
             height="calc(100%)"
             @cell-click="(row, column)=>cellClick(row, column,formData)"
@@ -36,8 +37,6 @@
                            :before-upload="beforeUpload"
                            :data="fileName"
                            :limit="1"
-                           :on-remove="(uploadFile, uploadFiles)=>successRemove(uploadFile, uploadFiles)"
-                           :on-success="(uploadFile, uploadFiles)=>successUpload(uploadFile, uploadFiles)"
                            drag
                            multiple
                 >
@@ -69,19 +68,15 @@
             </template>
         </el-table-column>
     </el-table>
-
 </template>
 
 <script setup>
 import {ref} from "vue";
-import apis from "../../api/api.js";
+import apis from "../../../api/api.js";
 
 const props = defineProps({
-    formData: Object,
-    currentId: Number,
-    saveRequest: Function
+    formData: Object
 })
-const emits = defineEmits(["getParams",])
 const formOptions = [
     {
         value: 'string',
@@ -108,7 +103,6 @@ const formOptions = [
         label: 'file',
     },
 ]
-
 const size = ref("large")
 const rowClassName = ({row, column, rowIndex, columnIndex}) => {
     row.index = rowIndex
@@ -136,8 +130,7 @@ const deleteRow = (val, index) => {
 // 文件列表更新
 const action = apis.uploadFile()
 const fileName = ref({
-    name: "",
-    api: null
+    name: ""
 })
 const beforeRemove = (uploadFile, uploadFiles) => {
     //  console.log(uploadFile)
@@ -146,14 +139,6 @@ const beforeRemove = (uploadFile, uploadFiles) => {
 
 const beforeUpload = (uploadFile, uploadFiles) => {
     fileName.value.name = uploadFile.name
-    fileName.value.api = props.currentId
-}
-
-const successRemove = (uploadFile, uploadFiles) => {
-    props.saveRequest(obj)
-}
-const successUpload = (uploadFile, uploadFiles) => {
-    props.saveRequest(obj)
 }
 
 // 上传文件这里，保存钱走本地读取文件  上传；保存后将文件上传到django服务，方便用例直接从服务获取图片，防止上传接口失败
@@ -223,4 +208,19 @@ const successUpload = (uploadFile, uploadFiles) => {
         }
     }
 }
+
+
+:deep(.el-upload) {
+    --el-upload-dragger-padding-horizontal: 0;
+    --el-upload-dragger-padding-vertical: 10px;
+}
+
+.el-upload__text {
+    text-align: left;
+}
+
+:deep(.el-upload-list) {
+    margin: 0;
+}
+
 </style>
