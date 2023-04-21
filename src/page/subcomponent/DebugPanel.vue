@@ -178,18 +178,17 @@
                             </template>
                             <div style="display: flex;justify-content: center;">
                                 <el-form
+                                        :model="item_son"
+                                        :rules="postConditionRules"
                                         label-position="right"
                                         label-width="120px"
                                         style="width: 80%;"
                                 >
-                                    <el-form-item v-if="item_son.type ===0"
-                                                  label="断言名称"
+                                    <el-form-item
+                                            :label="getLabel(item_son.type)"
+                                            prop="name"
                                     >
-                                        <el-input v-model="item_son.name"/>
-                                    </el-form-item>
-                                    <el-form-item v-if="item_son.type ===1"
-                                                  label="变量名称">
-                                        <el-input v-model="item_son.name"/>
+                                        <el-input clearable v-model="item_son.name"/>
                                     </el-form-item>
                                     <el-form-item label="源数据">
                                         <el-select v-model="item_son.resMetaData"
@@ -228,7 +227,7 @@
                                                     style="width: 80px;"
                                             />
                                         </div>
-                                        <div v-if="item_son.resMetaData===1"
+                                        <div v-else-if="item_son.resMetaData===1"
                                              class="p-content-style">
                                             <el-input v-model="item_son.expression"
                                                       placeholder="Json Path 表达式"
@@ -304,7 +303,21 @@
                                             </template>
                                         </el-input>
                                     </el-form-item>
-
+                                    <el-form-item v-if="item_son.type ===1 && newOptions.length!==0"
+                                                  label="保存变量到">
+                                        <el-select
+                                                v-model="item_son.config"
+                                                clearable
+                                                placeholder="请选择环境"
+                                                style="width: 100%;">
+                                            <el-option
+                                                    v-for="item in newOptions"
+                                                    :key="item.id"
+                                                    :label="item.title"
+                                                    :value="item.id"
+                                            />
+                                        </el-select>
+                                    </el-form-item>
                                 </el-form>
                             </div>
                         </el-collapse-item>
@@ -344,17 +357,17 @@
                         返回结果
                     </el-button>
                 </el-tag>
-                <el-tag v-if="item.response?.status" :type="statusTtype(item.response.status)"
+                <el-tag v-if="item?.response?.status" :type="statusTtype(item?.response.status)"
                         effect="dark">
                     <Timer style="width: 1.5em; height: 1.5em; margin-right: 5px;"/>
-                    {{ dateFormat(item.response.startTime) }}
-                    <Sunny v-if="item.response.status<300"
+                    {{ dateFormat(item?.response.startTime) }}
+                    <Sunny v-if="item?.response.status<300"
                            class="results-icon"/>
                     <Lightning v-else class="results-icon"/>
                     Status
-                    {{ item.response.status }}
+                    {{ item?.response.status }}
                     <Odometer class="results-icon"/>
-                    {{ item.response.duration || '0' }}ms
+                    {{ item?.response.duration || '0' }}ms
                 </el-tag>
             </div>
             <div v-if="state" class="response-Content">
@@ -364,7 +377,7 @@
                     <el-tabs model-value="first" id="requestDiv" type="border-card">
                         <el-tab-pane label="Response" name="first">
                             <div class="response-div">
-                                <MyAce v-if="item.response?.status"
+                                <MyAce v-if="item?.response?.status"
                                        :raw-data="toStr(item.response.data)"
                                        :readonly="true"
                                 >
@@ -372,7 +385,7 @@
                                 <el-empty v-else :image-size="120"
                                           description="点击发送获取响应结果"
                                           style="height: 100%;flex: 1;"/>
-                                <div v-if="item.response?.postConditionResult?.length > 0"
+                                <div v-if="item?.response?.postConditionResult?.length > 0"
                                      class="Condition-show">
                                     <div v-for="(p, p_index) in item.response.postConditionResult"
                                          :style="{'background-color': getConditionColor(p.status)}"
@@ -394,7 +407,7 @@
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="Request" name="second">
-                            <pre>{{ item.response?.request }}</pre>
+                            <pre>{{ item?.response?.request }}</pre>
                         </el-tab-pane>
                     </el-tabs>
                 </div>
@@ -404,7 +417,7 @@
 </template>
 
 <script setup>
-import {getCurrentInstance, ref} from "vue";
+import {getCurrentInstance, reactive, ref, watch} from "vue";
 import dayjs from "dayjs";
 import Params from "./Params.vue";
 import FormData from "./FormData.vue";
@@ -412,11 +425,18 @@ import MyAce from "./MyAce.vue";
 
 const props = defineProps({
     item: Object,
-    index: Number,
+    storageOptions: {
+        type: Array,
+        required: false,
+        default: []
+    },
+    // index: Number,
     sendRequest: Function,
     openSelPro: Function
 
 })
+const newOptions = ref()
+console.log(props.storageOptions)
 const {proxy} = getCurrentInstance()
 let tab2Content = ref(0);
 let responseHeight = ref(0)
@@ -557,6 +577,29 @@ const postConditionCommand = (command) => {
     })
     //  console.log(command.data)
 }
+const getLabel = (val) => {
+    let name
+    switch (val) {
+        case 0:
+            name = '断言名称'
+            break;
+        case 1:
+            name = '变量名称'
+            break;
+        default:
+            name = ""
+    }
+    return name
+}
+let storageOptions = ref([])
+const postConditionRules = reactive({
+    name: [
+        {required: true, message: '请输入名称！', trigger: 'blur'},
+    ],
+    config: [
+        {required: true, message: '请选择环境！', trigger: 'blur'},
+    ]
+})
 const dropdownOptions = [
     {
         type: 0,
@@ -677,7 +720,10 @@ const resultDisplay = () => {
     }
 
 }
-
+watch(() => props.storageOptions, (newValue, oldValue) => {
+    console.log('DebugPanel', newValue);
+    newOptions.value = newValue
+}, {immediate: true, deep: true})
 </script>
 
 <style lang="less" scoped>

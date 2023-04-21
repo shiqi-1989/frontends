@@ -778,20 +778,22 @@
                                                     </template>
                                                     <div style="display: flex;justify-content: center;">
                                                         <el-form
+                                                                :model="item_son"
                                                                 :rules="postConditionRules"
                                                                 label-position="right"
                                                                 label-width="120px"
                                                                 style="width: 80%;"
                                                         >
-                                                            <el-form-item v-if="item_son.type ===0"
-                                                                          label="断言名称"
+                                                            <el-form-item
+                                                                    :label="item_son.type ===0?'断言名称':'变量名称'"
+                                                                    prop="name"
                                                             >
                                                                 <el-input v-model="item_son.name"/>
                                                             </el-form-item>
-                                                            <el-form-item v-if="item_son.type ===1"
-                                                                          label="变量名称">
-                                                                <el-input v-model="item_son.name"/>
-                                                            </el-form-item>
+                                                            <!--<el-form-item v-if="item_son.type ===1"-->
+                                                            <!--              label="变量名称">-->
+                                                            <!--    <el-input v-model="item_son.name"/>-->
+                                                            <!--</el-form-item>-->
                                                             <el-form-item label="源数据">
                                                                 <el-select v-model="item_son.resMetaData"
                                                                            placeholder="Select"
@@ -829,7 +831,7 @@
                                                                             style="width: 80px;"
                                                                     />
                                                                 </div>
-                                                                <div v-if="item_son.resMetaData===1"
+                                                                <div v-else-if="item_son.resMetaData===1"
                                                                      class="p-content-style">
                                                                     <el-input v-model="item_son.expression"
                                                                               placeholder="Json Path 表达式"
@@ -1127,7 +1129,7 @@ const props = defineProps({
         required: false
     },
     projectId: {
-        type: Number,
+        type: String,
         required: false
     },
     options: {
@@ -1310,9 +1312,10 @@ const changSpan = () => {
 const apiEnv = ref()
 let configurationOptions = ref([])
 let storageOptions = ref([])
+const postConditionRef = ref()
 const postConditionRules = reactive({
     name: [
-        {required: true, message: '请输出名称！', trigger: 'blur'},
+        {required: true, message: '请输入名称！', trigger: 'blur'},
     ],
     config: [
         {required: true, message: '请选择环境！', trigger: 'blur'},
@@ -2199,12 +2202,12 @@ const sendRequest = (obj) => {
     obj.response = {};
     apis.apiSend(obj)
             .then(res => {
-                obj.response = res.data
+                obj['response'] = res.data
                 console.log(obj.response)
                 // loading1.value = false
             })
             .catch(err => {
-                obj.response = err.response.data
+                obj['response'] = err.response.data
                 // loading1.value = false
             })
 
@@ -2225,11 +2228,8 @@ const saveRequest = (obj) => {
         }
     }
     const newObj = JSON.parse(JSON.stringify(obj))
-    newObj.response = {
-        status: obj.response.status,
-        startTime: obj.response.startTime,
-        duration: obj.response.duration,
-    }
+    newObj.status = obj.response.status;
+    delete newObj.response
     if (newObj.rawData.type === 'json') {
         try {
             newObj.rawData.text = JSON.stringify(JSON.parse(newObj.rawData.text))

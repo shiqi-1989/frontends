@@ -9,17 +9,18 @@
                     </div>
                 </template>
                 <el-empty v-if="historyData.length===0" description="description" style="height: 100%;"/>
+                <!--<el-scrollbar v-else>-->
                 <div v-else class="infinite-list-wrapper" style="overflow: auto;">
                     <ul v-infinite-scroll="loadApis" :infinite-scroll-disabled="apiDisabled">
-                        <li v-for="(item, index) in historyData" :key="index"
-                            :class="{active:item.id === currentId}"
+                        <li v-for="(item, index) in historyData" :key="index" :class="{active:item.id === currentId}"
                             :tabIndex="index">
-                            <span style="flex: 1;"
+                            <span style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;flex: 1;"
                                   @click="clickHistory(item.id)">
                                 <span
                                         :style="{color: $methodColor(item.method),fontWeight: 'bold',marginRight: '10px'}">
                                     {{ item.method }}
                                 </span>
+                                <!--<a>{{ item.path }}</a>-->
                                     <a>{{ item.title || "新接口" }} - {{ urlCut(item.url) }}</a>
                                 </span>
                             <el-dropdown class="edit-history" @command="historyCommand">
@@ -30,9 +31,6 @@
                                 </span>
                                 <template #dropdown>
                                     <el-dropdown-menu>
-                                        <el-dropdown-item @click="openSelPro(item, index)">
-                                            <Plus class="item-more"/>
-                                        </el-dropdown-item>
                                         <el-dropdown-item :command="{command:1, id:item.id, index:index}">
                                             <CopyDocument class="item-more"/>
                                         </el-dropdown-item>
@@ -47,6 +45,7 @@
                     <p v-if="apiLoading">Loading...</p>
                     <p v-if="noMore">No more</p>
                 </div>
+                <!--</el-scrollbar>-->
             </el-card>
         </div>
         <div class="rightBox">
@@ -66,15 +65,27 @@
                         <el-button circle icon="Notebook" color="#1bc014b0"
                                    @click="dialogFun=true"></el-button>
                     </el-tooltip>
+                    <el-button circle icon="Refresh" style="margin: 0  5px 0 12px" type="primary"
+                               @click="configList"></el-button>
+                    <el-select v-model="apiEnv" clearable placeholder="请选择环境" @change="selectConfig">
+                        <el-option
+                                v-for="item in configurationOptions"
+                                :key="item.id"
+                                :label="item.title"
+                                :value="item.id"
+                        />
+                    </el-select>
+                    <el-button icon="Operation" style="border-radius: 0 4px 4px 0;"
+                               @click="openEnv"></el-button>
                 </div>
                 <el-tabs
                         v-model="editableTabsValue"
                         class="api-tabs"
                         editable
                         type="card"
-                        @tab-click="handleClick"
                         @tab-remove="handleTabsDel"
                         @tab-add="handleTabsAdd"
+                        @tab-change="tabChange"
                 >
                     <div v-if="editableTabs.length<1"
                          style="display: flex;align-items: center;justify-content: center;height: 100%;">
@@ -86,9 +97,8 @@
                             :disabled="disabled"
                             :name="item.name"
                     >
-
                         <template #label>
-                            <el-tooltip :content="item.title || '新接口'" effect="light" placement="top">
+                            <el-tooltip :content="item.title|| '新接口'" effect="light" placement="top">
                                 <span v-show="!item.editLabel" @dblclick="labelClick(item)">{{
                                         item.title || "新接口"
                                     }}</span>
@@ -104,63 +114,32 @@
                             <AddApiMode :func1="myHandleTabsEdit" :func2="importApi"/>
                         </div>
                         <div v-else style="height: 100%;width: 100%;">
-                            <DebugPanel :open-sel-pro="openSelPro" :send-request="submitForm" :item="item"
-                            />
+                            <DebugPanel :send-request="submitForm" :item="item" :storage-options="storageOptions"/>
                         </div>
                     </el-tab-pane>
                 </el-tabs>
             </el-card>
         </div>
     </el-row>
-    <!--选择项目弹窗-->
-    <el-dialog
-            v-model="table.showEdit"
-            :before-close="handleClose"
-            title="添加到项目"
-            width="35%"
+
+    <!--配置弹窗-->
+    <el-dialog v-model="dialogTableVisible"
+               :before-close="envConfigurationClose"
+               destroy-on-close
+               title="配置中心"
+               width="70%"
     >
-        <el-form
-                ref="addToProFormRef"
-                :model="table.formData"
-                :rules="table.formRules"
-                label-position="right"
-                label-width="80px"
-        >
-            <el-form-item label="接口名称" prop="title">
-                <el-input v-model="table.formData.title" clearable maxlength="30"/>
-            </el-form-item>
-            <el-form-item label="所属项目" prop="project">
-                <el-select v-model="table.formData.project"
-                           clearable
-                           filterable
-                           placeholder="请选择项目"
-                           style="width: 100%;">
-                    <el-option
-                            v-for="item in projectList"
-                            :key="item.id"
-                            :label="item.title"
-                            :value="item.id"
-                    >
-                        <span style="float: left">{{ item.title }}</span>
-                        <span style="float: right;color: var(--el-text-color-secondary);font-size: 13px;">{{
-                                item.creator
-                            }}</span>
-                    </el-option>
-                </el-select>
-            </el-form-item>
-        </el-form>
-        <template #footer>
-        <span class="dialog-footer">
-        <el-button @click="handleClose">取消</el-button>
-        <el-button type="primary" @click="addToPro(addToProFormRef)">确认</el-button>
-      </span>
-        </template>
+        <div style="height: 60vh;">
+            <Environment :configuration-close="envConfigurationClose"
+                         :project="proId" :default-active="apiEnv"/>
+        </div>
     </el-dialog>
     <!--curl弹窗-->
     <el-dialog
             v-model="dialogCurl"
             title="cURL 解析"
             width="50%"
+            destroy-on-close
             :before-close="curlClose"
     >
         <el-input
@@ -188,31 +167,37 @@
     >
         <FunctionHelper/>
     </el-dialog>
-
 </template>
 
 <script setup>
-import {computed, getCurrentInstance, nextTick, onMounted, reactive, ref} from 'vue'
+import {computed, getCurrentInstance, nextTick, onMounted, reactive, ref, watch} from 'vue'
 import {ElMessage} from "element-plus";
 import FunctionHelper from "../../components/FunctionHelper.vue";
 import apis from "../../../api/api";
 import {useRouter} from "vue-router";
+import Environment from "../tools/Environment.vue"
 import {toJsonString} from "curlconverter";
 import AddApiMode from "../../components/AddApiMode.vue";
 import DebugPanel from "../subcomponent/DebugPanel.vue";
 
-const getParams = (item, key, val) => {
-    item[key] = val
-}
+const {proxy} = getCurrentInstance()
+const props = defineProps({
+    apiId: {
+        required: false
+    },
+    projectId: {
+        required: false
+    },
+    options: {
+        required: false
+    }
+})
+console.log(props)
+const proId = ref(props.projectId)
+const dialogFun = ref(false)
 const ruleFormRef = ref()
 const router = useRouter()
-const myIcon = ref('CaretLeft')
-const leftSpan = ref(true)
-const {proxy} = getCurrentInstance()
 const state = ref(true)
-// 函数助手
-const dialogFun = ref(false)
-//函数助手
 
 const dialogCurl = ref(false)
 const curlText = ref('')
@@ -221,7 +206,6 @@ const curlClose = () => {
     dialogCurl.value = false;
 }
 const runCurl = () => {
-    let key;
     try {
         var json_text = toJsonString(curlText.value)
     } catch (e) {
@@ -233,6 +217,7 @@ const runCurl = () => {
         editLabel: false,
         title: '新接口',
         name: null,
+        project: proId.value,
         method: "GET",
         url: "",
         bodyType: "none",
@@ -255,14 +240,14 @@ const runCurl = () => {
     const ContentType = headers['Content-Type'] ?? undefined
     const queries = json_obj.queries ?? {};
     const datas = json_obj?.data ?? {};
-    for (key in headers) {
+    for (var key in headers) {
         obj_add.headersData.push({
             name: key,
             value: headers[key],
             selected: true
         })
     }
-    for (key in queries) {
+    for (var key in queries) {
         obj_add.queryData.push({
             name: key,
             value: queries[key],
@@ -278,7 +263,7 @@ const runCurl = () => {
         obj_add.bodyType = 'form-data'
     } else {
         obj_add.bodyType = 'x-www-form-urlencoded'
-        for (key in datas) {
+        for (var key in datas) {
             obj_add.formUrlencodedData.push({
                 name: key,
                 value: datas[key],
@@ -302,34 +287,42 @@ const runCurl = () => {
         console.log(editableTabs.value)
     } else {
         console.log(obj_add)
-        handleTabsAdd(obj_add)
+        handleTabsEdit(obj_add)
     }
 
     curlClose()
 }
+const importApi = () => {
+    dialogCurl.value = true;
+    // ElMessage.success("敬请期待！")
+    // handleTabsEdit(undefined, 'add')
+    // setTimeout(function () {
+    //     const win = window.open("", "_blank");
+    //     win.location = "https://curlconverter.com/python/"
+    // });
+}
 
-const size = ref("large")
 const disabled = ref(false)
 const losing = (item) => {
     item.editLabel = false
     disabled.value = false
+    // apis.editApi(item.id, {title: item.title})
+    //         .then(({data}) => {
+    //             ElMessage.success(data.msg)
+    //             // apiPage.value = 2
+    //             // apiList();
+    //             for (const index in historyData.value) {
+    //                 if (historyData.value[index].id === data.data.id) {
+    //                     historyData.value[index].title = data.data.title
+    //                     break
+    //                 }
+    //             }
+    //         })
 }
 
-const table = reactive({
-    showEdit: false,
-    showIndex: null,
-    formData: {},
-    formRules: {
-        title: [
-            {required: true, message: '请输入接口名称', trigger: 'blur'},
-        ],
-        project: [
-            {required: true, message: "请选择项目", trigger: 'blur'},
-        ],
-    }
-})
-
-
+// 伸开收起按钮
+const myIcon = ref('CaretLeft')
+const leftSpan = ref(true)
 const changSpan = () => {
     leftSpan.value = !leftSpan.value;
     if (leftSpan.value) {
@@ -340,11 +333,95 @@ const changSpan = () => {
         myIcon.value = 'CaretRight'
     }
 }
+// 伸开收起按钮
 
-const currentId = ref()
-const handleClick = (TabsPaneContext, Event) => {
-    currentId.value = editableTabs.value[TabsPaneContext.index].id
+
+// 配置选项
+const apiEnv = ref()
+let configurationOptions = ref([])
+let storageOptions = ref([])
+
+const configList = () => {
+    if (proId.value) {
+        apis.configList({
+            project__id: proId.value,
+        })
+                .then(({data}) => {
+                    storageOptions.value = data.data
+                    configurationOptions.value = data.data.slice(1);
+                })
+    } else {
+        storageOptions.value = []
+        configurationOptions.value = [];
+    }
 }
+const envConfigurationClose = (done) => {
+    configList();
+    dialogTableVisible.value = false
+    // ElMessageBox.confirm('确定关闭窗口吗?')
+    //         .then(() => {
+    //             dialogTableVisible.value = false
+    //         })
+    //         .catch(() => {
+    //             // catch error
+    //         })
+}
+
+
+const selectConfig = (val) => {
+    editableTabs.value.forEach((tab, index) => {
+        if (tab.name === editableTabsValue.value) {
+            if (val === '') {
+                tab.api_env = null
+            } else {
+                tab.api_env = val
+            }
+            console.log(tab)
+            // if (tab.id) {
+            //     apis.editApi(tab.id, tab)
+            //             .then(() => {
+            //                 ElMessage.success("切换环境成功！")
+            //             })
+            //             .catch((err) => {
+            //                 ElMessage.error(err)
+            //             })
+            // }
+        }
+    })
+}
+const tabChange = (name) => {
+    console.log(`tab切换：${name}`)
+    editableTabs.value.forEach((tab, index) => {
+        if (tab.name === editableTabsValue.value) {
+            apiEnv.value = tab.api_env
+            proId.value = tab.project
+        }
+    })
+}
+
+const openEnv = () => {
+    if (proId.value) {
+        dialogTableVisible.value = true
+    } else {
+        ElMessage.error("当前接口未绑定项目，无法配置环境！")
+    }
+}
+
+// 获取当前激活区域api id
+const currentId = computed(() => {
+    let currentId
+    try {
+        editableTabs.value.forEach(tab => {
+            if (tab.name === editableTabsValue.value) {
+                currentId = tab.id
+                throw new Error()
+            }
+        })
+    } catch (e) {
+
+    }
+    return currentId
+})
 // 截取url path
 const urlCut = (url) => {
     try {
@@ -357,17 +434,86 @@ const urlCut = (url) => {
 
 }
 
-
+// 环境变量配置弹窗
+const dialogTableVisible = ref(false)
 // tab数据
 let tabIndex = 0
 const editableTabsValue = ref()
 const editableTabs = ref([])
+const handleTabsEdit = (obj_add) => {
+    const newTabName = `${++tabIndex}`
+    obj_add.name = newTabName;
+    editableTabs.value.push(obj_add)
+    editableTabsValue.value = newTabName
+    // if (action === 'add') {
+    //     const newTabName = `${++tabIndex}`
+    //     const obj = {
+    //         id: null,
+    //         editLabel: false,
+    //         title: '新接口',
+    //         name: newTabName,
+    //         project: proId.value,
+    //         method: "GET",
+    //         url: "",
+    //         bodyType: "none",
+    //         queryData: [],
+    //         headersData: [],
+    //         cookies: [],
+    //         formData: [],
+    //         formUrlencodedData: [],
+    //         rawData: {
+    //             type: "json",
+    //             text: ""
+    //         },
+    //         postCondition: [],
+    //         response: {}
+    //     }
+    //     editableTabs.value.push(obj)
+    //     editableTabsValue.value = newTabName
+    //     // apis.addApi(obj_add)
+    //     //         .then(({data}) => {
+    //     //             obj_add.id = data.data.id
+    //     //             ElMessage.success(data.msg)
+    //     //             console.log(data)
+    //     //             historyData.value.unshift(data.data)
+    //     //             editableTabs.value.push(obj_add)
+    //     //             editableTabsValue.value = newTabName
+    //     //         })
+    //     //         .catch(() => {
+    //     //             loading2.value = false
+    //     //         })
+    //
+    //
+    // } else if (action === 'remove') {
+    //     const tabs = editableTabs.value
+    //     let activeName = editableTabsValue.value
+    //     if (activeName === targetName) {
+    //         tabs.forEach((tab, index) => {
+    //             if (tab.name === targetName) {
+    //                 const nextTab = tabs[index + 1] || tabs[index - 1]
+    //                 if (nextTab) {
+    //                     activeName = nextTab.name
+    //                 } else {
+    //                     apiEnv.value = null;
+    //                     if (props.options === 1) {
+    //                         proId.value = null;
+    //                     }
+    //                 }
+    //             }
+    //         })
+    //     }
+    //
+    //     editableTabsValue.value = activeName
+    //     editableTabs.value = tabs.filter((tab) => tab.name !== targetName)
+    // }
+}
 const myHandleTabsEdit = () => {
     const obj = {
         id: null,
         editLabel: false,
         title: '新接口',
         name: null,
+        project: proId.value,
         method: "GET",
         url: "",
         bodyType: "none",
@@ -380,10 +526,14 @@ const myHandleTabsEdit = () => {
             type: "json",
             text: ""
         },
-        postCondition: []
+        postCondition: [],
+        response: {}
     }
     if (editableTabs.value.length === 0) {
-        handleTabsAdd(obj)
+        const newTabName = `${++tabIndex}`
+        obj.name = newTabName;
+        editableTabs.value.push(obj)
+        editableTabsValue.value = newTabName
     } else {
         editableTabs.value.forEach((tab, index) => {
             if (tab.name == editableTabsValue.value) {
@@ -403,10 +553,11 @@ const handleTabsDel = (targetName) => {
                 const nextTab = tabs[index + 1] || tabs[index - 1]
                 if (nextTab) {
                     activeName = nextTab.name
-                    // 更新当前id
-                    currentId.value = nextTab.id
                 } else {
-                    currentId.value = null
+                    apiEnv.value = null;
+                    if (props.options === 1) {
+                        proId.value = null;
+                    }
                 }
             }
         })
@@ -415,24 +566,18 @@ const handleTabsDel = (targetName) => {
     editableTabsValue.value = activeName
     editableTabs.value = tabs.filter((tab) => tab.name !== targetName)
 }
-const handleTabsAdd = (obj = null) => {
+const handleTabsAdd = () => {
     const newTabName = `${++tabIndex}`
-    if (obj) {
-        obj.name = newTabName;
-    } else {
-        obj = {
-            id: null,
-            editLabel: false,
-            title: '新接口',
-            name: newTabName,
-            method: null
-        }
+    const obj = {
+        id: null,
+        editLabel: false,
+        title: '新接口',
+        name: newTabName,
+        project: proId.value,
+        method: null
     }
     editableTabs.value.push(obj)
     editableTabsValue.value = newTabName
-}
-const importApi = () => {
-    dialogCurl.value = true;
 }
 const labelClick = (item) => {
     item.editLabel = true
@@ -449,22 +594,25 @@ const apiCount = ref(0)
 const apiDisabled = computed(() => apiLoading.value || noMore.value)
 const loadApis = () => {
     apiLoading.value = true
+    let projectId = props.projectId
+    if (props.options === 1) {
+        projectId = null
+    }
     const condition = {
+        project__id: projectId,
         page: apiPage.value,
         pageSize: 20
     }
-    apis.tempApiList(condition)
+    apis.apiList(condition)
             .then(({data}) => {
-                //  console.log(data)
                 apiPage.value += 1
-                apiCount.value = data.count
-                historyData.value.push(...data.results)
+                apiCount.value = data.data.count
+                historyData.value.push(...data.data.results)
                 apiLoading.value = false
             })
 
 }
 loadApis()
-
 const addApiTab = (id) => {
     apis.apiDetail(id)
             .then(({data}) => {
@@ -477,91 +625,73 @@ const addApiTab = (id) => {
 }
 
 const clickHistory = (id) => {
-    //  console.log(typeof id)
+    console.log(typeof id)
     if (id) {
-        currentId.value = id
         if (editableTabs.value.length === 0) {
             addApiTab(id)
         } else {
             const exist = ref(false)
             for (var i = 0; i < editableTabs.value.length; i++) {
-                //  console.log(editableTabs.value[i].id)
+                console.log(editableTabs.value[i].id)
                 if (editableTabs.value[i].id === id) {
                     editableTabsValue.value = editableTabs.value[i].name
                     exist.value = true
                     return
                 }
             }
-            //  console.log("没有匹配id")
+            console.log("没有匹配id")
             if (!exist.value) {
-                //  console.log("不存在 新建并赋值")
+                console.log("不存在 新建并赋值")
                 addApiTab(id)
             }
         }
     }
 }
+clickHistory(props.apiId)
+
 
 onMounted(() => {
-    // ace.config.set('basePath', '/node_modules/ace-builds/src-noconflict');
-    // nextTick(() => {
-    //     tab2Content.value = document.getElementById('tabs2').clientHeight - 50;
-    //     responseHeight.value = document.getElementById('responseDiv').clientHeight - 30;
-    // })
+    nextTick(() => {
+        const idEl = document.getElementById('configuration')
+        idEl.nextElementSibling.firstElementChild.style.width = `calc(100% - ${idEl.offsetWidth}px - 13px)`;
+        //     tab2Content.value = document.getElementById('tabs2').clientHeight - 50;
+        //     responseHeight.value = document.getElementById('responseDiv').clientHeight - 30;
+    })
     // window.onresize = () => {
     //     tab2Content.value = document.getElementById('tabs2').clientHeight - 50;
     //     responseHeight.value = document.getElementById('responseDiv').clientHeight - 30;
     // }
-    const idEl = document.getElementById('configuration')
-    idEl.nextElementSibling.firstElementChild.style.width = `calc(100% - ${idEl.offsetWidth}px - 13px)`;
+    watch(() => proId.value, (newValue, oldValue) => {
+        console.log('watch-debugPro-project', newValue);
+        configList()
+    }, {immediate: true, deep: true})
 })
-// 获取项目列表
-const projectList = ref([])
-const proList = () => {
-    apis.projectList()
-            .then(({data}) => {
-                if (data.code === 200) {
-                    //  console.log(data)
-                    projectList.value = data.data
-                } else {
-                    ElMessage.error(data.msg)
-                }
-            })
-}
+
 const historyCommand = (command) => {
-    console.log("删除历史记录")
-    //  console.log(command)
+    console.log(command)
     if (command.command === 2) {
         // 删除
         apis.delApi(command.id)
                 .then(() => {
-                    console.log(command.id)
-                    // const targetName = editableTabs.value.filter((tab) => tab.id === command.id)[0]?.name;
-                    const tabs = editableTabs.value
-                    editableTabs.value = tabs.filter((tab) => tab.id !== command.id)
-                    // handleTabsDel(targetName);
                     historyData.value.splice(command.index, 1)
                     apiCount.value -= 1
                     ElMessage.success("删除成功！")
+                    const targetName = editableTabs.value.filter((tab) => tab.id === command.id)[0]?.name;
+                    // handleTabsEdit(targetName, "remove");
+                    handleTabsDel(targetName);
                 })
     }
     if (command.command === 1) {
         //复制
         apis.copyApi({id: command.id})
                 .then(({data}) => {
-                    //  console.log(historyData.value)
+                    console.log(historyData.value)
                     historyData.value.unshift(data.data)
                     ElMessage.success("复制成功！")
                 })
     }
 }
-const addToProFormRef = ref()
-const openSelPro = (item, index) => {
-    // 添加到项目 选择项目弹窗
-    table.formData = item
-    table.showIndex = index
-    table.showEdit = true
-    proList()
-}
+
 
 // 发送请求
 const sendRequest = (obj) => {
@@ -569,23 +699,27 @@ const sendRequest = (obj) => {
         ElMessage.error("如未配置环境请输入含 http / https 的完整 URL")
         return
     }
-    // 发送按钮loading
     for (const item of obj.formData) {
         if (item.name !== '') {
             if (item.type === 'file' && item.fileList.length > 0) {
                 for (let i = 0; i < item.fileList.length; i++) {
                     item.fileList[i].raw = {
+                        uid: item.fileList[i].raw.uid,
                         type: item.fileList[i].raw.type
                     }
                 }
             }
         }
     }
+    // 发送按钮loading
+    // loading1.value = true
     obj.response = {};
     apis.apiSend(obj)
             .then(res => {
                 obj.status = res.data.status
                 obj['response'] = res.data
+                console.log("---------")
+                console.log(obj.response)
             })
             .catch(err => {
                 obj.status = err.response.data.status
@@ -595,17 +729,16 @@ const sendRequest = (obj) => {
 }
 // 保存请求
 const saveRequest = (obj) => {
-    console.log(obj)
     const apiId = obj.id
     for (const item of obj.formData) {
         if (item.name !== '') {
             if (item.type === 'file' && item.fileList.length > 0) {
                 for (var i = 0; i < item.fileList.length; i++) {
                     item.fileList[i].raw = {
+                        uid: item.fileList[i].raw.uid,
                         type: item.fileList[i].raw.type
                     }
                 }
-
             }
         }
     }
@@ -619,14 +752,14 @@ const saveRequest = (obj) => {
     }
     if (apiId) {
         // 更新api
-        //  console.log("更新")
+        console.log("更新")
         apis.editApi(apiId, newObj)
                 .then(({data}) => {
                     ElMessage.success(data.detail)
                     // apiPage.value = 2
                     // apiList();
                     for (const index in historyData.value) {
-                        if (historyData.value[index].id === data.data.id) {
+                        if (historyData.value[index].id === apiId) {
                             historyData.value[index].title = data.data.title
                             historyData.value[index].url = data.data.url
                             historyData.value[index].method = data.data.method
@@ -636,77 +769,38 @@ const saveRequest = (obj) => {
                 })
     } else {
         // 新增api
-        //  console.log("新增")
+        console.log("新增")
         apis.addApi(newObj)
                 .then(({data}) => {
                     obj.id = data.data.id
-                    ElMessage.success("新增成功")
-                    //  console.log(data)
+                    ElMessage.success(data.detail)
+                    console.log(data)
                     historyData.value.unshift(data.data)
                 })
     }
-
-
 }
 const submitForm = async (formEl, item, num) => {
-    console.log(1111111111111)
-    console.log(formEl)
     if (!formEl) return
     await formEl.validate((valid, fields) => {
         if (valid) {
+            console.log('submit!')
             Object.keys(item).forEach(key => {
                 if (Array.isArray(item[key])) {
                     item[key] = item[key].filter((tab) => tab.name !== "")
                 }
             })
-            //  console.log('submit!')
             if (num === 1) {
                 sendRequest(item)
             } else if (num === 2) {
                 saveRequest(item)
             }
         } else {
-            //  console.log('error submit!', fields)
+            console.log('error submit!', fields)
         }
     })
 }
 
-const handleClose = () => {
-    resetForm(addToProFormRef)
-    table.showIndex = null;
-    table.showEdit = false;
-}
-//重置新建
-const resetForm = (formEl) => {
-    if (!formEl) return
-    formEl.value.resetFields()
-}
-const addToPro = (formEl) => {
-    if (!formEl) return
-    formEl.validate((valid) => {
-        if (valid) {
-            apis.editApi(table.formData.id, table.formData)
-                    .then(({data}) => {
-                        handleTabsDel(editableTabsValue.value)
-                        try {
-                            historyData.value.forEach((item, index) => {
-                                if (item.id === table.formData.id) {
-                                    historyData.value.splice(index, 1);
-                                    throw new Error()
-                                }
-                            })
-                        } catch (e) {
-                        }
-                        apiCount.value -= 1
-                        ElMessage.success('添加到项目成功！')
-                        handleClose()
-                    })
 
-        } else {
-            return false
-        }
-    })
-}
 </script>
 
 <style lang="less" scoped>
@@ -734,6 +828,7 @@ const addToPro = (formEl) => {
     min-width: calc(75% - 20px);
 }
 
+
 .el-card {
     --el-card-padding: 0 10px;
     height: 100%;
@@ -744,12 +839,6 @@ const addToPro = (formEl) => {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
-        h3 {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
     }
 
     li {
@@ -801,6 +890,7 @@ const addToPro = (formEl) => {
     }
 }
 
+
 // 快捷请求记录编辑下拉框图标按钮的大小
 .item-more {
     width: 13px;
@@ -820,6 +910,7 @@ const addToPro = (formEl) => {
         height: 100%;
     }
 }
+
 
 .title_box {
     width: auto;
@@ -843,9 +934,30 @@ const addToPro = (formEl) => {
 }
 
 
+#configuration {
+    position: absolute;
+    border-bottom: 1px solid #e4e7ed;
+    top: 10px;
+    right: 10px;
+    width: auto;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    //background-color: red;
+    .el-select {
+        width: 150px;
+    }
+
+    :deep(.el-input__wrapper) {
+        width: auto;
+        border-radius: 0;
+    }
+}
+
+
 //修改 添加tab按钮的位置 让其紧随 每个item后面
 :deep(.el-tabs--card>.el-tabs__header ) {
-    //width: calc(100% - 240px);
+    //width: calc(100% - @configuration_width - 10px);
     display: flex;
     justify-content: flex-start;
     padding-right: 15px;
@@ -868,35 +980,12 @@ const addToPro = (formEl) => {
 .infinite-list-wrapper {
     height: 100%;
 
-    span {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-
     p {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-}
-
-
-#configuration {
-    position: absolute;
-    border-bottom: 1px solid #e4e7ed;
-    top: 10px;
-    right: 10px;
-    width: auto;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    //background-color: red;
-    :deep(.el-input__wrapper) {
-        width: auto;
-        border-radius: 0;
-    }
+;
 }
 
 </style>

@@ -149,7 +149,7 @@
             @close="apiList"
     >
         <div class="content">
-            <ApiDebug :api-id="table.selectRow.api" :options="1" :project-id="table.selectRow.project"/>
+            <ApiDebug_test :api-id="table.selectRow.api" :options="1" :project-id="table.selectRow.project"/>
         </div>
     </el-dialog>
 </template>
@@ -159,6 +159,7 @@ import {onMounted, onUnmounted, reactive, ref} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import apis from '../../../api/api'
 import ApiDebug from "../debug/ApiDebug.vue";
+import ApiDebug_test from "../debug/ApiDebug_test.vue";
 import {useRouter} from "vue-router";
 
 const router = useRouter()

@@ -73,7 +73,7 @@
                 <!--            placement="top">-->
                 <!--    <el-result :icon="statusTtype(scope.row.response.status)"/>-->
                 <!--</el-tooltip>-->
-                <el-tag :type="statusTtype(scope.row.response.status)">{{ scope.row.response.status || '000' }}</el-tag>
+                <el-tag :type="statusTtype(scope.row.status)">{{ scope.row.status || '000' }}</el-tag>
             </template>
         </el-table-column>
         <el-table-column label="操作" width="125">
@@ -143,7 +143,7 @@
             @close="apiList"
     >
         <div class="content">
-            <ApiDebug :api-id="apiId" :project-id="projectId"/>
+            <ApiDebug_test :api-id="apiId" :project-id="projectId"/>
         </div>
     </el-dialog>
 </template>
@@ -155,11 +155,12 @@ import apis from '../../../api/api'
 import {useRouter} from "vue-router";
 import dayjs from "dayjs";
 import ApiDebug from "../debug/ApiDebug.vue";
+import ApiDebug_test from "../debug/ApiDebug_test.vue";
 
 
 const router = useRouter()
 console.log(router.currentRoute.value)
-const projectId = Number(router.currentRoute.value.query.id)
+const projectId = router.currentRoute.value.query.id
 console.log(`项目id params：${projectId}`)
 // console.log(`项目id params：${typeof projectId}`)
 // console.log(router.currentRoute.value)
