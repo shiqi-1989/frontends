@@ -1,8 +1,9 @@
 <template>
-    <video v-if="background_plate.suffix === 'mp4'" :src="background_plate.file" autoplay loop muted playsinline
+    <video v-if="background_plate.suffix === 'mp4'" autoplay loop muted playsinline
            preload webkit-playsinline>
+        <source :src="background_plate.file" type="video/mp4">
     </video>
-    <div id="background"
+    <div v-else id="background"
          :style="{ backgroundImage: `url(${background_plate.file})` }">
     </div>
     <div class="login-content">

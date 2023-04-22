@@ -143,7 +143,7 @@
             @close="apiList"
     >
         <div class="content">
-            <ApiDebug_test :api-id="apiId" :project-id="projectId"/>
+            <ApiDebug :api-id="apiId" :project-id="projectId"/>
         </div>
     </el-dialog>
 </template>
@@ -155,8 +155,6 @@ import apis from '../../../api/api'
 import {useRouter} from "vue-router";
 import dayjs from "dayjs";
 import ApiDebug from "../debug/ApiDebug.vue";
-import ApiDebug_test from "../debug/ApiDebug_test.vue";
-
 
 const router = useRouter()
 console.log(router.currentRoute.value)

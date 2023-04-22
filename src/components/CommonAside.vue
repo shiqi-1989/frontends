@@ -127,7 +127,7 @@ const menuData = [
         subClass: []
     },
     {
-        index: "7",
+        index: "",
         icon: 'QuestionFilled',
         title: '帮助中心',
         subClass: []
@@ -136,11 +136,6 @@ const menuData = [
         index: "testInfo",
         icon: 'Promotion',
         title: '测试模块',
-        subClass: []
-    }, {
-        index: "testDebug",
-        icon: 'Operation',
-        title: '测试Debug',
         subClass: []
     },
 ]

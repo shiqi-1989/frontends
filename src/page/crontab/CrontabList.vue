@@ -208,7 +208,7 @@ const crontabList = () => {
                     table.tableData = data.data.results
                     table.total = data.data.count
                 } else {
-                    ElMessage.error(data.msg)
+                    ElMessage.error(data.detail)
                 }
             })
 }
@@ -413,7 +413,7 @@ const addCrontab = () => {
                     // crontabList();
                     ElMessage.success("新增成功！")
                 } else {
-                    ElMessage.error(data.msg)
+                    ElMessage.error(data.detail)
                 }
             })
 }
@@ -429,7 +429,7 @@ const editCrontab = (row) => {
                     Object.assign(row, data.data);
                     ElMessage.success("保存成功！");
                 } else {
-                    ElMessage.error(data.msg);
+                    ElMessage.error(data.detail);
                 }
             })
 }

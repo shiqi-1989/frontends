@@ -37,16 +37,19 @@
         <el-button size="large" type="primary"
                    @click="sendRequest(ruleFormRef, item, 1)">发送
         </el-button>
-
-        <el-dropdown size="large" split-button type="primary"
+        <el-dropdown v-if="from===1" size="large" split-button type="primary"
                      @click="sendRequest(ruleFormRef, item, 2)">保存
             <template #dropdown>
                 <el-dropdown-menu>
-                    <el-dropdown-item @click="openSelPro(item, index)">保存到项目
+                    <el-dropdown-item @click="openSelPro(item)">保存到项目
                     </el-dropdown-item>
                 </el-dropdown-menu>
             </template>
         </el-dropdown>
+        <el-button v-else size="large" type="primary"
+                   @click="sendRequest(ruleFormRef, item, 2)">保存
+        </el-button>
+
     </div>
     <!--整体参数区域  headers  body 等等-->
     <div :class="box_layout? 'body-box':'body-box-row'">
@@ -432,11 +435,12 @@ const props = defineProps({
     },
     // index: Number,
     sendRequest: Function,
-    openSelPro: Function
+    openSelPro: Function,
+    //1 debug 2 apidebug 3 casedebug
+    from: Number
 
 })
 const newOptions = ref()
-console.log(props.storageOptions)
 const {proxy} = getCurrentInstance()
 let tab2Content = ref(0);
 let responseHeight = ref(0)
@@ -591,7 +595,6 @@ const getLabel = (val) => {
     }
     return name
 }
-let storageOptions = ref([])
 const postConditionRules = reactive({
     name: [
         {required: true, message: '请输入名称！', trigger: 'blur'},
@@ -721,7 +724,6 @@ const resultDisplay = () => {
 
 }
 watch(() => props.storageOptions, (newValue, oldValue) => {
-    console.log('DebugPanel', newValue);
     newOptions.value = newValue
 }, {immediate: true, deep: true})
 </script>
@@ -746,8 +748,7 @@ watch(() => props.storageOptions, (newValue, oldValue) => {
     }
 
     .el-button {
-        margin: 0 10px;
-        width: 80px;
+        margin-left: 12px;
     }
 
     .el-select {
@@ -763,6 +764,7 @@ watch(() => props.storageOptions, (newValue, oldValue) => {
     }
 
     .el-dropdown {
+        margin-left: 12px;
 
         :deep(.el-button-group) {
             display: flex;

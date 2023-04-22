@@ -298,7 +298,7 @@ const caseList = () => {
                     table.tableData = data.data.results
                     table.total = data.data.count
                 } else {
-                    ElMessage.error(data.msg)
+                    ElMessage.error(data.detail)
                 }
             })
 }
@@ -316,7 +316,7 @@ const proList = () => {
                     //  console.log(data)
                     projectList.value = data.data
                 } else {
-                    ElMessage.error(data.msg)
+                    ElMessage.error(data.detail)
                 }
             })
 }
@@ -472,7 +472,7 @@ const submitForm = (formEl) => {
                                     table.selectRow.id = data.data.id
                                     table.caseDebug = true
                                 } else {
-                                    throw new Error(data.msg)
+                                    throw new Error(data.detail)
                                 }
                             })
                             .catch((err) => {
@@ -493,9 +493,9 @@ const losing = () => {
             apis.editCase(table.selectRow.id, {title: table.selectRow.title})
                     .then(({data}) => {
                         if (data.code === 200) {
-                            ElMessage.success(data.msg)
+                            ElMessage.success(data.detail)
                         } else {
-                            throw new Error(data.msg)
+                            throw new Error(data.detail)
                         }
                     })
                     .catch((err) => {
@@ -533,9 +533,9 @@ const runCase = (caseId = null, option) => {
                 .then(({data}) => {
                     //  console.log(data)
                     if (data.code === 200) {
-                        ElMessage.success(data.msg)
+                        ElMessage.success(data.detail)
                     } else {
-                        ElMessage.error(data?.msg)
+                        ElMessage.error(data.detail)
                     }
                     if (data.data.report) {
                         // html.value = data.data.report
@@ -557,8 +557,10 @@ const runCase = (caseId = null, option) => {
                     ElMessage.error(err)
                 })
     } else {
+        const ids = multipleSelection.value.map(item => item.id)
+        if (ids.length === 0) return ElMessage.error('请至少选择一条数据！');
         apis.runCase({
-            caseId: multipleSelection.value.map(item => item.id)
+            caseId: ids
         })
                 .then(({data}) => {
                     //  console.log(data)

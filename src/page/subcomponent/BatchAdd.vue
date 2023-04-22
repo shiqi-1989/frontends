@@ -44,9 +44,6 @@ const a = '\t'
 const radio1 = ref("1")
 const placeholderText = ref("")
 const textareavalue = ref("")
-const batchIndex = ref()
-const batchOption = ref()
-const batchData = ref()
 const additemsClose = () => {
     textareavalue.value = ""
     radio1.value = "1";
@@ -118,7 +115,6 @@ const formattingData = (data) => {
     return obj_list
 }
 onMounted(() => {
-    console.log(radio1.value)
 })
 
 defineExpose({

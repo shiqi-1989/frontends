@@ -1164,7 +1164,7 @@ import "ace-builds/src-noconflict/mode-text.js"
 import "ace-builds/src-noconflict/mode-html.js"
 import "ace-builds/src-noconflict/mode-xml.js"
 import "ace-builds/src-noconflict/mode-javascript.js"
-import apis from "../../../api/api";
+import apis from "../../../api/api.js";
 import {useRouter} from "vue-router";
 import {toJsonString} from "curlconverter";
 import AddApiMode from "../../components/AddApiMode.vue";
@@ -2128,11 +2128,11 @@ const saveRequest = (obj) => {
         }
     }
     const newObj = JSON.parse(JSON.stringify(obj))
-     newObj.response = {
-        status:  obj.response.status,
+    newObj.response = {
+        status: obj.response.status,
         startTime: obj.response.startTime,
-        duration:  obj.response.duration,
-     }
+        duration: obj.response.duration,
+    }
     if (newObj.rawData.type === 'json') {
         try {
             newObj.rawData.text = JSON.stringify(JSON.parse(newObj.rawData.text))
@@ -2469,7 +2469,8 @@ const addToPro = (formEl) => {
             .ace-style {
                 height: 100%;
             }
-            .response-div{
+
+            .response-div {
                 flex-direction: column;
             }
 

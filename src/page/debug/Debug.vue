@@ -104,7 +104,7 @@
                             <AddApiMode :func1="myHandleTabsEdit" :func2="importApi"/>
                         </div>
                         <div v-else style="height: 100%;width: 100%;">
-                            <DebugPanel :open-sel-pro="openSelPro" :send-request="submitForm" :item="item"
+                            <DebugPanel :from="1" :open-sel-pro="openSelPro" :send-request="submitForm" :item="item"
                             />
                         </div>
                     </el-tab-pane>
@@ -192,7 +192,7 @@
 </template>
 
 <script setup>
-import {computed, getCurrentInstance, nextTick, onMounted, reactive, ref} from 'vue'
+import {computed, nextTick, onMounted, reactive, ref} from 'vue'
 import {ElMessage} from "element-plus";
 import FunctionHelper from "../../components/FunctionHelper.vue";
 import apis from "../../../api/api";
@@ -208,8 +208,6 @@ const ruleFormRef = ref()
 const router = useRouter()
 const myIcon = ref('CaretLeft')
 const leftSpan = ref(true)
-const {proxy} = getCurrentInstance()
-const state = ref(true)
 // 函数助手
 const dialogFun = ref(false)
 //函数助手
@@ -430,6 +428,7 @@ const handleTabsAdd = (obj = null) => {
     }
     editableTabs.value.push(obj)
     editableTabsValue.value = newTabName
+    currentId.value = null
 }
 const importApi = () => {
     dialogCurl.value = true;
@@ -555,7 +554,7 @@ const historyCommand = (command) => {
     }
 }
 const addToProFormRef = ref()
-const openSelPro = (item, index) => {
+const openSelPro = (item, index = null) => {
     // 添加到项目 选择项目弹窗
     table.formData = item
     table.showIndex = index
@@ -639,9 +638,10 @@ const saveRequest = (obj) => {
         //  console.log("新增")
         apis.addApi(newObj)
                 .then(({data}) => {
-                    obj.id = data.data.id
                     ElMessage.success("新增成功")
                     //  console.log(data)
+                    obj.id = data.data.id
+                    currentId.value = data.data.id
                     historyData.value.unshift(data.data)
                 })
     }
@@ -688,14 +688,18 @@ const addToPro = (formEl) => {
             apis.editApi(table.formData.id, table.formData)
                     .then(({data}) => {
                         handleTabsDel(editableTabsValue.value)
-                        try {
-                            historyData.value.forEach((item, index) => {
-                                if (item.id === table.formData.id) {
-                                    historyData.value.splice(index, 1);
-                                    throw new Error()
-                                }
-                            })
-                        } catch (e) {
+                        if (table.showIndex) {
+                            historyData.value.splice(table.showIndex, 1);
+                        } else {
+                            try {
+                                historyData.value.forEach((item, index) => {
+                                    if (item.id === table.formData.id) {
+                                        historyData.value.splice(index, 1);
+                                        throw new Error()
+                                    }
+                                })
+                            } catch (e) {
+                            }
                         }
                         apiCount.value -= 1
                         ElMessage.success('添加到项目成功！')
