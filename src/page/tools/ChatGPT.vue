@@ -13,7 +13,7 @@ import {nextTick, onMounted, ref} from "vue";
 import {ElLoading} from "element-plus";
 import {myLoading} from "../../util/loadding.js"
 
-const src = ref('https://chatgpt.letsearches.com/')
+const src = 'https://chat.wuguokai.cn/#/chat/1682327642298'
 
 
 onMounted(() => {
