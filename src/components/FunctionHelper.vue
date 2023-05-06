@@ -70,6 +70,7 @@
             v-model="funResult"
             show-word-limit
             :rows="6"
+            spellcheck="false"
             type="textarea"
     />
 </template>

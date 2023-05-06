@@ -597,7 +597,6 @@ const runCase = (caseId = null, option) => {
 }
 
 .el-pagination {
-    background-color: #ffffff;
     padding: 15px 0 0;
     justify-content: center;
     --el-pagination-bg-color: none;

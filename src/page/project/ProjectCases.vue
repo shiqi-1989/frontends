@@ -522,7 +522,6 @@ onUnmounted(() => {
 }
 
 .el-pagination {
-    background-color: #ffffff;
     padding: 15px 0 0;
     justify-content: flex-end;
     --el-pagination-bg-color: none;

@@ -7,6 +7,7 @@ import store from "./store";
 import 'element-plus/dist/index.css'
 import '../style/index.less'
 import {HTMLFormat, JsonFormat, methodColor, selections} from './util/utils'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 // 注册图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
