@@ -210,6 +210,7 @@
                                              class="p-content-style">
                                             <el-input v-model="item_son.expression"
                                                       placeholder="正则表达式"
+                                                      clearable
                                                       style="flex: 1;"/>
                                             <span
                                                     style="margin: 0 8px;align-items: center;display: flex">
@@ -233,14 +234,15 @@
                                         <div v-else-if="item_son.resMetaData===1"
                                              class="p-content-style">
                                             <el-input v-model="item_son.expression"
-                                                      placeholder="Json Path 表达式"
+                                                      placeholder="Json 表达式"
+                                                      clearable
                                                       style="flex: 1;"/>
                                             <span
                                                     style="margin: 0 8px;align-items: center;display: flex">
                                                                     继续提取
                                                                   <el-tooltip effect="light" placement="top">
                                                                     <template
-                                                                            #content> 对提取结果进行深度提取，比如分割字符串继续提取 </template>
+                                                                            #content> 支持：对表达式的字符串结果进行分隔继续提取 </template>
                                                                     <el-icon :size="15" color="#cfcfcf">
                                                                       <QuestionFilled/>
                                                                     </el-icon>
@@ -261,7 +263,7 @@
                                         <div class="p-content-style">
                                             <el-input
                                                     v-model="item_son.continueExtract.separator"
-                                                    placeholder="字符串分隔符号">
+                                                    placeholder="字符串分隔符号" clearable>
                                                 <template #prepend>分隔符</template>
                                             </el-input>
                                             <el-input-number
@@ -278,6 +280,7 @@
                                                 v-model="item_son.assert.expected"
                                                 class="input-with-select"
                                                 placeholder="预期结果"
+                                                clearable
                                         >
                                             <template #prepend>
                                                 <el-select v-model="item_son.assert.way"
