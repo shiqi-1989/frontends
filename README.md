@@ -27,11 +27,13 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 ### 项目管理
   - 项目列表
-  - 新增
-  [screenity (5).webm](https://user-images.githubusercontent.com/48465237/230832415-f6bcda4c-504d-43e6-8b4e-5d05cb6f8f34.webm)
-
-  - 项目下 api列表 case列表
-  ![image](https://user-images.githubusercontent.com/48465237/229175355-37579841-0c68-4997-9205-35af239eeb09.png)
+  ![录制_2023_06_08_18_05_45_835](https://github.com/shiqi-1989/frontends/assets/48465237/5ba3d4a8-72f4-4d4a-b196-9f6533aed56b)
+  - 项目下  api列表 
+   ![录制_2023_06_08_18_12_28_546](https://github.com/shiqi-1989/frontends/assets/48465237/a937a29a-1412-4b8c-b9d9-5f90cc899e29)
+   - 项目下 case列表
+   ![录制_2023_06_08_18_16_00_472](https://github.com/shiqi-1989/frontends/assets/48465237/7582abfb-8b1b-4393-b72b-3e16d8df7d3d)
+   - 项目下 case详情
+   ![录制_2023_06_08_18_20_09_719](https://github.com/shiqi-1989/frontends/assets/48465237/3ebed23b-27fe-41fb-96e7-66e097a7cbae)
   - 新增api 编辑api 支持“快捷接口”和“cURLi解析” 两种创建方式
   ![image](https://user-images.githubusercontent.com/48465237/229175504-fbf2f5f3-4906-47ee-8d1b-ed3cd78d940a.png)
   - 快捷接口
