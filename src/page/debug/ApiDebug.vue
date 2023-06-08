@@ -5,7 +5,7 @@
                     :body-style="{ padding: '5px 10px 20px',height:'calc(100% - 50px)', boxSizing:'border-box'}">
                 <template #header>
                     <div class="card-header">
-                        <h3>快捷请求</h3>
+                        <h3>api列表</h3>
                     </div>
                 </template>
                 <el-empty v-if="historyData.length===0" description="description" style="height: 100%;"/>
