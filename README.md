@@ -53,4 +53,5 @@ This template should help get you started developing with Vue 3 in Vite. The tem
   - ![录制_2023_04_02_17_47_15_421](https://user-images.githubusercontent.com/48465237/229347542-d4e01c90-3095-494f-ad6b-d41219b10e97.gif)
 
 ### 定时任务
-  - 
+  - ![录制_2023_06_09_12_59_56_211](https://github.com/shiqi-1989/frontends/assets/48465237/a19837b4-a7af-460e-9081-44a8c85c862a)
+
