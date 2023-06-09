@@ -50,4 +50,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
   ![录制_2023_06_09_12_25_42_848](https://github.com/shiqi-1989/frontends/assets/48465237/66e330f1-479a-41f1-b738-3fd5b149461f)
 
 ### 接口调试
-  ![录制_2023_04_02_17_47_15_421](https://user-images.githubusercontent.com/48465237/229347542-d4e01c90-3095-494f-ad6b-d41219b10e97.gif)
+  - ![录制_2023_04_02_17_47_15_421](https://user-images.githubusercontent.com/48465237/229347542-d4e01c90-3095-494f-ad6b-d41219b10e97.gif)
+
+### 定时任务
+  - 
