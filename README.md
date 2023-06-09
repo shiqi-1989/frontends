@@ -27,19 +27,19 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 ### 项目管理
   - 项目列表
-  ![录制_2023_06_08_18_05_45_835](https://github.com/shiqi-1989/frontends/assets/48465237/5ba3d4a8-72f4-4d4a-b196-9f6533aed56b)
+  ![录制_2023_06_09_10_13_28_590](https://github.com/shiqi-1989/frontends/assets/48465237/cebbfec5-c1ca-476d-b8e0-95e21c424256)
   - 项目下  api列表 
    ![录制_2023_06_08_18_12_28_546](https://github.com/shiqi-1989/frontends/assets/48465237/a937a29a-1412-4b8c-b9d9-5f90cc899e29)
    - 项目下 case列表
    ![录制_2023_06_08_18_16_00_472](https://github.com/shiqi-1989/frontends/assets/48465237/7582abfb-8b1b-4393-b72b-3e16d8df7d3d)
    - 项目下 case详情
    ![录制_2023_06_08_18_20_09_719](https://github.com/shiqi-1989/frontends/assets/48465237/3ebed23b-27fe-41fb-96e7-66e097a7cbae)
-  - 新增api 编辑api 支持“快捷接口”和“cURLi解析” 两种创建方式
+  - 新增api 编辑api 支持“快捷接口”和“cURL解析” 两种创建方式
   ![image](https://user-images.githubusercontent.com/48465237/229175504-fbf2f5f3-4906-47ee-8d1b-ed3cd78d940a.png)
   - 快捷接口
-  ![image](https://user-images.githubusercontent.com/48465237/229176146-d0012c4e-7cc0-4210-85f5-01cfc9d9f70f.png)
+  ![录制_2023_06_09_10_17_42_697](https://github.com/shiqi-1989/frontends/assets/48465237/6076db45-671e-4145-ab75-d0ecce057778)
   - CURL解析接口
-  ![image](https://user-images.githubusercontent.com/48465237/229176521-ec9bf47b-b1a6-4c2c-b8e7-1f4a93a864d3.png)
+  
   - 支持多种请求方式
   ![image](https://user-images.githubusercontent.com/48465237/229176669-1376920e-d0c2-4b26-8465-e24cb7fa94d8.png)
   - 支持query/headers/cookie/body
