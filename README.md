@@ -27,41 +27,31 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 ### 项目管理
   - 项目列表
-  - 新增
-  [screenity (5).webm](https://user-images.githubusercontent.com/48465237/230832415-f6bcda4c-504d-43e6-8b4e-5d05cb6f8f34.webm)
-
-  - 项目下 api列表 case列表
-  ![image](https://user-images.githubusercontent.com/48465237/229175355-37579841-0c68-4997-9205-35af239eeb09.png)
-  - 新增api 编辑api 支持“快捷接口”和“cURLi解析” 两种创建方式
+  ![录制_2023_06_09_10_13_28_590](https://github.com/shiqi-1989/frontends/assets/48465237/cebbfec5-c1ca-476d-b8e0-95e21c424256)
+  - 项目下  api列表 
+   ![录制_2023_06_08_18_12_28_546](https://github.com/shiqi-1989/frontends/assets/48465237/a937a29a-1412-4b8c-b9d9-5f90cc899e29)
+   - 项目下 case列表
+   ![录制_2023_06_08_18_16_00_472](https://github.com/shiqi-1989/frontends/assets/48465237/7582abfb-8b1b-4393-b72b-3e16d8df7d3d)
+   - 项目下 case详情
+   ![录制_2023_06_08_18_20_09_719](https://github.com/shiqi-1989/frontends/assets/48465237/3ebed23b-27fe-41fb-96e7-66e097a7cbae)
+  - 新增api 编辑api 支持“快捷接口”和“cURL解析” 两种创建方式
   ![image](https://user-images.githubusercontent.com/48465237/229175504-fbf2f5f3-4906-47ee-8d1b-ed3cd78d940a.png)
   - 快捷接口
-  ![image](https://user-images.githubusercontent.com/48465237/229176146-d0012c4e-7cc0-4210-85f5-01cfc9d9f70f.png)
+  ![录制_2023_06_09_10_17_42_697](https://github.com/shiqi-1989/frontends/assets/48465237/6076db45-671e-4145-ab75-d0ecce057778)
   - CURL解析接口
-  ![image](https://user-images.githubusercontent.com/48465237/229176521-ec9bf47b-b1a6-4c2c-b8e7-1f4a93a864d3.png)
-  - 支持多种请求方式
-  ![image](https://user-images.githubusercontent.com/48465237/229176669-1376920e-d0c2-4b26-8465-e24cb7fa94d8.png)
-  - 支持query/headers/cookie/body
-  ![image](https://user-images.githubusercontent.com/48465237/229176986-a347f4ea-4483-4a95-b8fb-2975c2bd7c45.png)
-  - 支持后置操作（提取变量|断言）
-  ![image](https://user-images.githubusercontent.com/48465237/229181188-d4219250-31ad-477a-9036-fc467cf69ac1.png)
+  ![录制_2023_06_09_10_20_50_558](https://github.com/shiqi-1989/frontends/assets/48465237/78187a4b-2907-426f-b81c-45120fd4ea5a)
+  - 函数助手
+  ![录制_2023_06_09_11_13_35_322](https://github.com/shiqi-1989/frontends/assets/48465237/d06f532d-8a9e-4380-b35b-06f4da7c790b)
+  - 后置操作（提取变量|断言）
+  ![录制_2023_06_09_11_35_30_412](https://github.com/shiqi-1989/frontends/assets/48465237/8deaeaea-5bac-46aa-9150-2c888363866f)
   - 变量使用方式:${变量名}  ${函数表达式}
-  ![image](https://user-images.githubusercontent.com/48465237/229185666-7a0c0f75-16a1-4553-a88c-4fac490c0bac.png)
-  - 支持环境选择
-  ![image](https://user-images.githubusercontent.com/48465237/229181560-aaef5073-6549-45b0-9ab3-80ac8dfa7683.png)
+  ![录制_2023_06_09_11_46_21_618](https://github.com/shiqi-1989/frontends/assets/48465237/07f96ff2-7c7a-404e-b847-ad6750b6b17b)
   - 支持环境配置（新建环境|配置环境host|配置环境变量）
-  ![image](https://user-images.githubusercontent.com/48465237/229182029-1893cd31-240a-4b98-93bb-293277b3098d.png)
-  - 支持函数助手（快速生成函数表达式和结果预览）
-  ![image](https://user-images.githubusercontent.com/48465237/229182406-53fbede8-4c06-41d8-883b-d28eabecc86e.png)
-  - api列表 支持快速请求api返回结果弹窗
-  ![image](https://user-images.githubusercontent.com/48465237/229182780-7b04366c-a9c2-49ca-9c39-ca2ee25bfdf1.png)
-  - 用例添加api
-  ![image](https://user-images.githubusercontent.com/48465237/229183030-cf0bb168-874d-416f-9356-59b6a3bf85a4.png)
-  - 用例左侧 步骤列表 支持拖动改变api执行顺序；右侧展示api详情（支持调试修改）
-  ![image](https://user-images.githubusercontent.com/48465237/229183544-9467dedd-23c9-4d80-bc33-2e529c0869e0.png)
-  - 执行用例 自动跳转报告页
-  ![image](https://user-images.githubusercontent.com/48465237/229183735-8d7eb2b4-cf7c-444b-93ac-bed42b5ee192.png)
-  - 报告列表页
-  ![image](https://user-images.githubusercontent.com/48465237/229183799-f1d57e43-3cda-49f3-b3d9-d5357ddb0093.png)
+  ![录制_2023_06_09_12_25_42_848](https://github.com/shiqi-1989/frontends/assets/48465237/66e330f1-479a-41f1-b738-3fd5b149461f)
 
 ### 接口调试
-  ![录制_2023_04_02_17_47_15_421](https://user-images.githubusercontent.com/48465237/229347542-d4e01c90-3095-494f-ad6b-d41219b10e97.gif)
+  - ![录制_2023_04_02_17_47_15_421](https://user-images.githubusercontent.com/48465237/229347542-d4e01c90-3095-494f-ad6b-d41219b10e97.gif)
+
+### 定时任务
+  - ![录制_2023_06_09_12_59_56_211](https://github.com/shiqi-1989/frontends/assets/48465237/a19837b4-a7af-460e-9081-44a8c85c862a)
+
