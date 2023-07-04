@@ -400,7 +400,7 @@ const batchRemove = () => {
 // 新建|编辑项目弹窗关闭
 const handleClose = () => {
     table.showEdit = false;
-    resetForm(ruleFormRef)
+    // resetForm(ruleFormRef)
 }
 // 创建项目接口
 const addCrontab = () => {

@@ -370,6 +370,7 @@ const selectConfig = (val) => {
             } else {
                 tab.api_env = val
             }
+            apiEnv.value = tab.api_env
             console.log(tab)
             // if (tab.id) {
             //     apis.editApi(tab.id, tab)
