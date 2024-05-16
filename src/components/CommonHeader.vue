@@ -36,7 +36,8 @@ import {useStore} from 'vuex'
 import {useRouter} from "vue-router"; // 引入useStore 方法
 const store = useStore()  // 该方法用于返回store 实例
 const userInfo = ref(JSON.parse(localStorage.getItem('userInfo')))
-const userImg = new URL(`/avatars.png`, import.meta.url).href;
+// const userImg = new URL(`/avatars.png`, import.meta.url).href;
+const userImg = new URL(userInfo.value.gender === 'Male' ? `/avatars.png` : `/avataaars_female.png`, import.meta.url).href;
 const router = useRouter()
 const handleCommand = (command) => {
     switch (command) {

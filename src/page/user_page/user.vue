@@ -51,11 +51,14 @@
 </template>
 <script setup>
 
-const userImg = new URL(`/avatars.png`, import.meta.url).href;
+// const userImg = new URL(`/avatars.png`, import.meta.url).href;
 
 
 const getAddrInfo = JSON.parse(sessionStorage.getItem('cityInfo'));
 const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+// let userImg = userInfo.gender === 'Male' ? new URL(`/avatars.png`, import.meta.url).href : new URL(`/avataaars_female.png`, import.meta.url).href;
+const userImg = new URL(userInfo.gender === 'Male' ? `/avatars.png` : `/avataaars_female.png`, import.meta.url).href;
+console.log(userImg)
 const tableLabel = {
     date: "Date_shi",
     name: "Name_shi",

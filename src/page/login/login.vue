@@ -23,11 +23,12 @@
                 <el-form-item label="" prop="mobile">
                     <el-input v-model="user.mobile" clearable maxlength="11"
                               @input="value => user.mobile = value.replace(/\D/g,'')"
-                              placeholder="请输入账号" spellcheck="false"
+                              placeholder="请输入手机号" spellcheck="false"
                               type="tel">
                         <template #prefix>
                             <el-icon :size="size" class="el-input__icon">
-                                <PhoneFilled/>
+                                <!--                                <PhoneFilled/>-->
+                                <Phone/>
                             </el-icon>
                         </template>
                     </el-input>
@@ -46,10 +47,27 @@
                     <el-input v-model="user.username" clearable placeholder="请输入用户名" spellcheck="false">
                         <template #prefix>
                             <el-icon :size="size" class="el-input__icon">
-                                <Avatar/>
+                                <!--                                <Avatar/>-->
+                                <User/>
                             </el-icon>
                         </template>
                     </el-input>
+                </el-form-item>
+                <el-form-item v-if="reg==='登录'" prop="gender">
+                    <el-select v-model="user.gender" placeholder="请选择您的性别">
+                        <el-option
+                                v-for="item in gender_options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                        >
+                        </el-option>
+                        <template #prefix>
+                            <el-icon :size="size" class="el-input__icon">
+                                <Guide/>
+                            </el-icon>
+                        </template>
+                    </el-select>
                 </el-form-item>
                 <!--登录按钮-->
                 <el-form-item>
@@ -79,8 +97,17 @@ let reg = ref("注册")
 const user = reactive({
     mobile: "",
     username: "",
-    password: ""
+    password: "",
+    gender: ""
 })
+const gender_options = [{
+    value: 'Male',
+    label: '男',
+},
+    {
+        value: 'Female',
+        label: '女',
+    }]
 // const bc_url = reactive([
 //     "人和鱼.mp4",
 //     "窗和鱼.mp4",
@@ -106,11 +133,12 @@ const background_plate = computed(() => {
 })
 const rules = reactive({
     mobile: [
-        {required: true, message: "账号不能为空", trigger: 'blur'},
+        {required: true, message: "手机号不能为空", trigger: 'blur'},
         {pattern: /^1(3|4|5|7|8)\d{9}$/, message: "账号必须11有效手机号", trigger: "blur"}
     ],
     username: [{required: true, message: "用户名不能为空", trigger: 'blur'},],
     password: [{required: true, message: "密码不能为空", trigger: 'blur'},],
+    gender: [{required: true, message: "请选择您的性别", trigger: 'blur'},],
 })
 const size = ref(18)
 //清除所有
@@ -177,8 +205,21 @@ const submitForm = (formEl, e) => {
 }
 </script>
 <style lang="less" scoped>
-.el-input {
+//.el-input {
+//    height: 48px;
+//}
+
+:deep(.el-input) {
     height: 48px;
+
+}
+
+.el-select {
+    width: 100%;
+
+    :deep(.el-input__icon) {
+        margin-left: 0;
+    }
 }
 
 button {
