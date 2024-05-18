@@ -13,6 +13,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
   ![录制_2023_04_02_17_30_14_744](https://user-images.githubusercontent.com/48465237/229344554-1710d889-baa2-4569-8050-a01ca28882ce.gif)
 
 ### 首页-快捷方式
+  - 增删改查
   ![录制_2024_05_18_13_58_59_327](https://github.com/shiqi-1989/frontends/assets/48465237/bdfa26f7-a8a6-4f66-8f3e-8dbc8c27940d)
 
 ### 项目管理
