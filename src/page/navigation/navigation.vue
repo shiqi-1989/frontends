@@ -12,7 +12,7 @@
     </div>
     <div class="row2">
         <!--快捷方式列表-->
-        <div v-for="(item, index) in table.searchList" v-show="table.searchList.length!==null" class="tag-box">
+        <div v-for="(item, index) in table.searchList" v-show="table.searchList!==null" class="tag-box">
             <el-dropdown class="edit-icon" placement="bottom-end">
                                 <span class="el-dropdown-link">
                                   <el-icon>
@@ -21,7 +21,7 @@
                                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item @click="editIcon(item)">
+                        <el-dropdown-item @click="editIcon(item, index)">
                             编辑
                         </el-dropdown-item>
                         <el-dropdown-item @click="delIcon(item.id, index)">
@@ -162,7 +162,8 @@ const table = reactive({
         ],
     },
     linkData: [],
-    searchList: null
+    searchList: null,
+    searchIndex: null
 })
 // 添加按钮
 const showWindow = () => {
@@ -194,11 +195,15 @@ const editTag = (row) => {
     apis.editTag(row.id, table.formData)
             .then(({data}) => {
                 if (data.code === 200) {
+                    console.log(table.searchIndex)
+                    if (table.searchIndex !== null && (row.title !== table.formData.title)) {
+                        table.searchList.splice(table.searchIndex, 1)
+                    }
                     handleClose()
+                    console.log(table)
                     Object.assign(row, data.data);
                     ElMessage.success("保存成功！");
                 }
-
             })
 }
 const addTag = () => {
@@ -219,7 +224,8 @@ const resetForm = (formEl) => {
     formEl.value.resetFields()
 }
 const creator = ref()
-const editIcon = (row) => {
+const editIcon = (row, index = null) => {
+    table.searchIndex = index
     table.showEdit = true
     table.selectRow = row
     table.formData = {
@@ -233,6 +239,9 @@ const editIcon = (row) => {
 const delIcon = (id, index) => {
     apis.delTag(id)
             .then(() => {
+                if (table.searchList) {
+                    table.searchList.splice(index, 1)
+                }
                 table.linkData.splice(index, 1)
                 ElMessage.success("移除成功！")
             })
@@ -266,6 +275,7 @@ const searchMethod = (query) => {
             })
             console.log(table.searchList.length)
         } else {
+            console.log(table)
             table.searchList = null
         }
     }, 300)
