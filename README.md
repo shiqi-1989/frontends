@@ -12,18 +12,8 @@ This template should help get you started developing with Vue 3 in Vite. The tem
   - 登录
   ![录制_2023_04_02_17_30_14_744](https://user-images.githubusercontent.com/48465237/229344554-1710d889-baa2-4569-8050-a01ca28882ce.gif)
 
-
-### 首页
-  - 搜索
-  ![录制_2023_04_02_17_17_32_893](https://user-images.githubusercontent.com/48465237/229343953-3c75a4b6-760c-4d33-b6b7-069fd9825e09.gif)
-  - 新增
-  ![录制_2023_04_02_17_15_41_750](https://user-images.githubusercontent.com/48465237/229343788-f6fbaf20-9bba-4feb-bc01-a9b2534e29cd.gif)
-  - 编辑
-  ![录制_2023_04_02_17_09_58_356](https://user-images.githubusercontent.com/48465237/229343604-ab049dbd-32bd-4ac0-9a5b-195047322e0b.gif)
-  - 删除
-  ![录制_2023_04_02_17_13_23_735](https://user-images.githubusercontent.com/48465237/229343709-f315c242-38cc-49cf-b133-aa9e4ba76e5d.gif)
-
-
+### 首页-快捷方式
+  ![录制_2024_05_18_13_58_59_327](https://github.com/shiqi-1989/frontends/assets/48465237/bdfa26f7-a8a6-4f66-8f3e-8dbc8c27940d)
 
 ### 项目管理
   - 项目列表
