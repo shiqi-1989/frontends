@@ -3,10 +3,8 @@
 This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
 ### 登录&&注册
-  - 注册
-  ![录制_2023_04_02_17_23_10_746](https://user-images.githubusercontent.com/48465237/229344280-57b54b10-e17e-4b15-b1db-d0e61b850088.gif)
-  - 登录
-  ![录制_2023_04_02_17_30_14_744](https://user-images.githubusercontent.com/48465237/229344554-1710d889-baa2-4569-8050-a01ca28882ce.gif)
+  - 注册&登录
+  ![录制_2024_05_22_16_20_10_834](https://github.com/shiqi-1989/frontends/assets/48465237/d6a3afd8-f639-4b07-b361-5b4c4b64f39b)
 
 ### 首页-快捷方式
   - 增删改查
